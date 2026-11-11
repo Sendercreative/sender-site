@@ -6,7 +6,7 @@ import { WORK, BOXES, HERO, PROCESS, SYSTEM, CHOICES, CONTACT } from '../data/si
 import '../styles/home.css';
 
 const W = WORK;
-const deck = [W.logos[0], W.videos[0], W.logos[2], W.logos[1], W.websites[0], W.logos[3], W.logos[4]].filter(Boolean);
+const deck = [W.logos[0], W.videos[0], W.websites[1], W.logos[3], W.websites[5], W.logos[2], W.websites[4]].filter(Boolean);
 const letters = (s: string) => [...s];
 const workHref = { logos: '/work/#branding', videos: '/work/#video', websites: '/work/#websites' } as const;
 ---
@@ -42,7 +42,7 @@ const workHref = { logos: '/work/#branding', videos: '/work/#video', websites: '
                   ) : p.inv ? (
                     <div class="fm dk"><Image src={p.inv} alt="" width={480} loading="lazy" /></div>
                   ) : (
-                    <div class="fm web"><span>{p.ph}</span></div>
+                    <div class:list={['fm', 'tph', { dk: p.dark }]}><span class="tph-l">{p.name}</span><span class="tph-s">{p.ph}</span></div>
                   )}
                 </div>
               </div>
@@ -56,7 +56,7 @@ const workHref = { logos: '/work/#branding', videos: '/work/#video', websites: '
           <article class="box" id={`b-${b.key}`}>
             <div class="bxh"><div class="l"><h2>{b.label}</h2></div></div>
             <div class={b.key === 'logos' ? 'lgrid' : 'vlist'}>
-              {W[b.key].map((item) => <Tile item={item} />)}
+              {W[b.key].map((item) => <Tile item={item} web={b.key === 'websites'} />)}
             </div>
             <a href={workHref[b.key]} class="more">All {b.label.toLowerCase()} →</a>
           </article>

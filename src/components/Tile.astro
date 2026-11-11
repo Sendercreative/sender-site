@@ -2,14 +2,16 @@
 import { Image } from 'astro:assets';
 import type { WorkItem } from '../data/site';
 
-interface Props { item: WorkItem }
-const { item: p } = Astro.props;
+interface Props { item: WorkItem; web?: boolean }
+const { item: p, web = false } = Astro.props;
 
 const ytId = (u: string) => (u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/) || [])[1] || u;
 const y = p.youtube ? ytId(p.youtube) : null;
 const logo = p.img ?? p.inv;
+const href = y ? `https://youtu.be/${y}` : p.href ?? '#';
+const meta = [p.tag, p.year].filter(Boolean).join(' · ');
 ---
-<a href={y ? `https://youtu.be/${y}` : '#'} class="tile" {...(y ? { target: '_blank', rel: 'noopener' } : {})}>
+<a href={href} class="tile" {...(y ? { target: '_blank', rel: 'noopener' } : {})}>
   {y ? (
     <div class="m wide">
       <iframe
@@ -20,14 +22,17 @@ const logo = p.img ?? p.inv;
     <div class="m wide">
       <video class="lazyv" src={p.video.src} poster={p.video.poster} muted loop playsinline preload="none" aria-label={p.name}></video>
     </div>
-  ) : p.ph ? (
-    <div class="m web"><div class="ph">{p.ph}</div></div>
   ) : logo ? (
     <div class:list={['m', { dk: !p.img }]}>
       {logo.format === 'svg'
         ? <img src={logo.src} alt={p.name} width={logo.width} height={logo.height} loading="lazy" decoding="async" />
         : <Image src={logo} alt={p.name} widths={[240, 480]} sizes="(max-width:760px) 60vw, 240px" loading="lazy" decoding="async" />}
     </div>
-  ) : null}
-  <div class="cap"><span>{p.name}</span><span>{p.tag} · {p.year}</span></div>
+  ) : (
+    <div class:list={['m', 'tph', { web: web || p.dark, dk: p.dark }]}>
+      <span class="tph-l">{p.name}</span>
+      <span class="tph-s">{p.ph}</span>
+    </div>
+  )}
+  <div class="cap"><span>{p.name}</span><span>{meta}</span></div>
 </a>

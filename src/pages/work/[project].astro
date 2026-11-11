@@ -1,0 +1,114 @@
+---
+import Base from '../../layouts/Base.astro';
+import Ph from '../../components/Ph.astro';
+import { PROJECTS, projectHref, type Project } from '../../data/projects';
+import { CONTACT } from '../../data/site';
+import '../../styles/pages.css';
+import '../../styles/project.css';
+
+export function getStaticPaths() {
+  return PROJECTS.map((p, i) => ({ params: { project: p.slug }, props: { p, next: PROJECTS[(i + 1) % PROJECTS.length] } }));
+}
+
+const { p, next } = Astro.props as { p: Project; next: Project };
+const im = p.images ?? {};
+const live = p.url && p.status !== 'soon';
+const host = p.url ? new URL(p.url).hostname.replace(/^www\./, '') : '';
+const site = Astro.site!.href;
+const url = new URL(projectHref(p), site).href;
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: `${p.name}: ${p.services.join(', ')}`,
+    description: p.summary,
+    url,
+    creator: { '@id': `${site}#org` },
+    ...(live ? { about: { '@type': 'Organization', name: p.name, url: p.url } } : {}),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site },
+      { '@type': 'ListItem', position: 2, name: 'Work', item: new URL('/work/', site).href },
+      { '@type': 'ListItem', position: 3, name: p.name, item: url },
+    ],
+  },
+];
+---
+<Base
+  title={`${p.name}: ${p.services.join(' + ')} | Sender Creative`}
+  description={`${p.summary.startsWith('[') ? `${p.services.join(', ')} for ${p.name}.` : p.summary} Designed and built by Sender Creative.`}
+  schema={schema}
+  ctaEyebrow="Want results like this?"
+>
+  <article class="pg case">
+    <header class="pg-hero pad">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span aria-hidden="true">/</span><a href="/work/">Work</a><span aria-hidden="true">/</span><span aria-current="page">{p.name}</span>
+      </nav>
+      <h1 class="rv">{p.name}</h1>
+      <p class="lead rv">{p.summary}</p>
+      <dl class="meta rv">
+        <div><dt>Services</dt><dd>{p.services.join(' · ')}</dd></div>
+        <div><dt>Industry</dt><dd>{p.industry}</dd></div>
+        {p.year && <div><dt>Year</dt><dd>{p.year}</dd></div>}
+        <div><dt>Website</dt><dd>{live ? <a href={p.url} target="_blank" rel="noopener">{host} ↗</a> : p.status === 'soon' ? `${host} · launching soon` : '—'}</dd></div>
+      </dl>
+    </header>
+
+    <div class="pad case-hero rv">
+      <Ph img={im.hero} label={`${p.name} · hero image`} size="2400 × 1350" ratio="16/9" dark alt={`${p.name} project`} />
+    </div>
+
+    <section class="sec pad" aria-labelledby="story-h">
+      <h2 id="story-h" class="sr-only">The project</h2>
+      <div class="story">
+        <div class="dots rv"><p class="k">The challenge</p><p>{p.story.challenge}</p></div>
+        <div class="dots rv"><p class="k">What we built</p><p>{p.story.built}</p></div>
+        <div class="dots rv"><p class="k">The result</p><p>{p.story.result}</p></div>
+      </div>
+    </section>
+
+    <section class="sec brand pad" aria-labelledby="brand-h">
+      <div class="sh"><h2 id="brand-h" class="rv">The brand</h2><p class="rv">The logo in its light and dark versions.</p></div>
+      <div class="pair">
+        <Ph img={im.logoLight} label="Logo on light" size="SVG or PNG" ratio="4/3" alt={`${p.name} logo`} fit="contain" class="logo-slot" />
+        <Ph img={im.logoDark} label="Logo on dark" size="SVG or PNG" ratio="4/3" dark alt={`${p.name} logo, reversed`} fit="contain" class="logo-slot" />
+      </div>
+    </section>
+
+    <section class="sec web pad" aria-labelledby="web-h">
+      <div class="sh">
+        <h2 id="web-h" class="rv">The website</h2>
+        {live && <a class="btn line" href={p.url} target="_blank" rel="noopener">Visit {host} ↗</a>}
+      </div>
+      <div class="devices rv">
+        <figure class="browser">
+          <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>{host}</span></div>
+          <Ph img={im.desktop} label="Desktop screenshot" size="1440 × 900" ratio="16/10" alt={`${p.name} website on desktop`} sizes="(max-width:760px) 100vw, 66vw" />
+        </figure>
+        <figure class="phone">
+          <Ph img={im.mobile} label="Mobile" size="390 × 844" ratio="390/844" alt={`${p.name} website on mobile`} sizes="(max-width:760px) 60vw, 22vw" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="sec pad" aria-label="Gallery">
+      <div class="gallery">
+        {[0, 1, 2].map((i) => (
+          <Ph img={im.gallery?.[i]} label={`Gallery ${i + 1}`} size="1600 × 1200" ratio="4/3" alt={`${p.name} project detail ${i + 1}`} sizes="(max-width:760px) 100vw, 33vw" class="rv" />
+        ))}
+      </div>
+    </section>
+
+    <nav class="nextp pad" aria-label="Next project">
+      <a href={projectHref(next)} class="dots">
+        <span class="k">Next project</span>
+        <span class="n">{next.name} <span aria-hidden="true">→</span></span>
+      </a>
+    </nav>
+  </article>
+</Base>

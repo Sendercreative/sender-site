@@ -1,14 +1,6 @@
 import { SERVICES as SERVICES_DATA } from './services';
 import type { ImageMetadata } from 'astro';
-import gutterSleeve from '../assets/work/gutter-sleeve.png';
-import gutterSleeveWhite from '../assets/work/gutter-sleeve-white.png';
-import venture from '../assets/work/venture.png';
-import ventureWhite from '../assets/work/venture-white.png';
-import noble from '../assets/work/noble.png';
-import nobleMarkWhite from '../assets/work/noble-mark-white.png';
-import lindys from '../assets/work/lindys.png';
-import jbControls from '../assets/work/jb-controls.png';
-import sixDaysWhite from '../assets/work/six-days-white.svg';
+import { PROJECTS, projectHref } from './projects';
 
 export const CONTACT = {
   email: 'hello@sendercreative.ca',
@@ -25,7 +17,6 @@ export const CONTACT = {
 export type WorkItem = {
   name: string;
   tag: string;
-  year: string;
   /** Logo on a light tile */
   img?: ImageMetadata;
   /** Inverse logo, used on dark tiles */
@@ -34,27 +25,27 @@ export type WorkItem = {
   video?: { src: string; poster: string };
   /** YouTube URL — rendered as a muted autoplay loop */
   youtube?: string;
-  /** Placeholder label until a screenshot exists */
+  /** Placeholder label until a real image exists */
   ph?: string;
+  /** Dark placeholder tile */
+  dark?: boolean;
+  /** Where the tile links (case study) */
+  href?: string;
+  year?: string;
 };
 
 export const WORK: Record<'logos' | 'videos' | 'websites', WorkItem[]> = {
-  logos: [
-    { name: 'Gutter Sleeve', tag: 'Identity', year: '2025', img: gutterSleeve, inv: gutterSleeveWhite },
-    { name: 'Venture Gutter Services', tag: 'Identity', year: '2025', img: venture, inv: ventureWhite },
-    { name: 'Noble Woodworks', tag: 'Identity', year: '2024', img: noble, inv: nobleMarkWhite },
-    { name: "Lindy's Flowers", tag: 'Identity', year: '2024', img: lindys },
-    { name: 'JB Controls', tag: 'Identity', year: '2024', img: jbControls },
-    { name: '6 Days', tag: 'Identity', year: '2025', inv: sixDaysWhite },
-  ],
+  logos: PROJECTS.map((p) => ({
+    name: p.name, tag: 'Logo + brand', href: projectHref(p),
+    img: p.images?.logoLight, inv: p.images?.logoDark, ph: 'Logo',
+  })),
   videos: [
     { name: 'Sender Reel', tag: 'Edit + Motion', year: '2026', video: { src: '/media/reel.mp4', poster: '/media/reel-poster.jpg' } },
   ],
-  websites: [
-    { name: 'Venture Gutter Services', tag: 'Design + Build', year: '2026', ph: 'Website screenshot' },
-    { name: 'Noble Woodworks', tag: 'Design + Build', year: '2025', ph: 'Website screenshot' },
-    { name: 'Gutter Sleeve', tag: 'Design + Build', year: '2025', ph: 'Website screenshot' },
-  ],
+  websites: PROJECTS.map((p) => ({
+    name: p.name, tag: p.status === 'soon' ? 'Website · Soon' : 'Website', href: projectHref(p),
+    ph: 'Website screenshot', dark: true,
+  })),
 };
 
 /** The three glass panels that scroll past the hero. */

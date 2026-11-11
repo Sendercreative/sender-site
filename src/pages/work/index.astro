@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+import Ph from '../../components/Ph.astro';
+import Tile from '../../components/Tile.astro';
+import { PROJECTS, projectHref } from '../../data/projects';
+import { WORK } from '../../data/site';
+import '../../styles/pages.css';
+import '../../styles/project.css';
+
+const site = Astro.site!.href;
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Work',
+    url: new URL('/work/', site).href,
+    about: { '@id': `${site}#org` },
+    hasPart: PROJECTS.map((p) => ({ '@type': 'CreativeWork', name: p.name, url: new URL(projectHref(p), site).href })),
+  },
+];
+---
+<Base
+  title="Our Work: Branding & Websites | Sender Creative"
+  description="Logos, brands and websites designed and built by Sender Creative for businesses across Ontario: 6 Days, Venture Gutter Services, Gutter Sleeve, JB Controls, Ontario Window & Door Products and Void Cavitation."
+  schema={schema}
+>
+  <div class="pg">
+    <header class="pg-hero pad">
+      <div class="hero-orb" aria-hidden="true"></div>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Work</span></nav>
+      <h1 class="rv">Work for people who build things.</h1>
+      <p class="lead rv">Brands and websites we’ve designed and built, logo to launch.</p>
+      <div class="btns rv">
+        <a class="btn line" href="#projects">Projects</a>
+        <a class="btn line" href="#video">Video</a>
+      </div>
+    </header>
+
+    <section class="sec wstrip pad" id="projects" aria-labelledby="proj-h">
+      <span id="branding"></span><span id="websites"></span>
+      <div class="sh dots" style="padding-top:clamp(24px,3vw,40px)">
+        <h2 id="proj-h" class="rv">Logo + website</h2>
+        <p class="rv">Every project here started with the brand and ended with a site that puts it to work. <a href="/logo-design-branding/" style="border-bottom:1px solid">Branding</a> · <a href="/website-lead-capture/" style="border-bottom:1px solid">Websites</a></p>
+      </div>
+      <div class="pgrid">
+        {PROJECTS.map((p) => (
+          <a class="pcard rv" href={projectHref(p)}>
+            <Ph img={p.images?.hero} label={`${p.name} · cover`} size="2400 × 1350" ratio="16/10" dark alt="" sizes="(max-width:760px) 100vw, 50vw" />
+            <div class="t"><h3>{p.name}</h3><span class="tag">{p.services.join(' + ')}{p.status === 'soon' ? ' · Soon' : ''}</span></div>
+            <p>{p.industry}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="sec pad" id="video" aria-labelledby="vid-h" style="background:#fff">
+      <div class="sh dots" style="padding-top:clamp(24px,3vw,40px)">
+        <h2 id="vid-h" class="rv">Video</h2>
+        <p class="rv">Shot and edited in-house: brand films, reels and motion. <a href="/photo-video/" style="border-bottom:1px solid">More on photo + video →</a></p>
+      </div>
+      <div class="wgrid two">
+        {WORK.videos.map((item) => <Tile item={item} />)}
+      </div>
+    </section>
+  </div>
+</Base>

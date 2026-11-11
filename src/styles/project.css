@@ -1,0 +1,53 @@
+/* Case-study pages (/work/<slug>/) */
+.case .pg-hero h1{max-width:none}
+.meta{display:flex;flex-wrap:wrap;gap:20px clamp(28px,4vw,72px);margin-top:clamp(32px,4vw,56px);padding-top:24px;border-top:1px solid rgba(0,0,0,.12)}
+.meta dt{font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#6b6b6b}
+.meta dd{margin-top:10px;font-size:16px}
+.meta a{border-bottom:1px solid currentColor}
+.case-hero{margin-top:-20px}
+.case-hero .slot{border-radius:40px}
+
+.story{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,56px)}
+.story>div{padding-top:clamp(24px,3vw,36px)}
+.story .k,.nextp .k{font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#6b6b6b}
+.story p:last-child{margin-top:16px;font:400 clamp(20px,1.7vw,28px)/1.3 var(--disp);letter-spacing:-.015em}
+
+.brand{background:#f2f2f2}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.logo-slot.filled img{inset:18%;width:64%;height:64%}
+
+.web{background:#fff}
+.devices{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1fr);gap:clamp(20px,3vw,48px);align-items:end}
+.devices figure{margin:0}
+.browser{border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 50px 100px -50px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.08)}
+.browser .bar{display:flex;align-items:center;gap:7px;height:38px;padding:0 16px;background:#f4f4f4;border-bottom:1px solid #e2e2e2}
+.browser .bar i{width:10px;height:10px;border-radius:50%;background:#cfcfcf}
+.browser .bar span{margin-left:14px;flex:1;max-width:320px;padding:5px 12px;border-radius:20px;background:#fff;font:400 12px/1 var(--sans);color:#8a8a8a}
+.browser .slot{border-radius:0}
+.phone{padding:10px;border-radius:44px;background:#0b0b0b;box-shadow:0 50px 100px -40px rgba(0,0,0,.5)}
+.phone .slot{border-radius:34px}
+
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+
+.nextp{background:#fff;padding-bottom:clamp(60px,8vw,120px)}
+.nextp a{display:flex;flex-direction:column;gap:18px;padding-top:clamp(36px,4vw,56px)}
+.nextp .n{font:400 clamp(44px,7vw,120px)/.92 var(--disp);letter-spacing:-.05em;transition:transform .8s var(--ease)}
+.nextp a:hover .n{transform:translateX(14px)}
+
+/* Project cards (work page + service pages) */
+.pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,2.4vw,36px) 20px}
+.pcard{display:flex;flex-direction:column;gap:16px}
+.pcard .slot{border-radius:28px;transition:transform 1s var(--ease)}
+.pcard:hover .slot{transform:scale(.985)}
+.pcard .t{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.pcard h3{font:400 clamp(26px,2.4vw,40px)/1 var(--disp);letter-spacing:-.035em}
+.pcard .tag{font:400 11px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#5e5e5e;white-space:nowrap}
+.pcard p{font-size:15px;line-height:1.5;color:#444;max-width:52ch}
+
+@media(max-width:900px){.story{grid-template-columns:1fr}}
+@media(max-width:760px){
+  .pair,.gallery,.pgrid{grid-template-columns:1fr}
+  .devices{grid-template-columns:1fr}
+  .phone{width:62%;justify-self:center}
+  .case-hero .slot{border-radius:24px}
+}
