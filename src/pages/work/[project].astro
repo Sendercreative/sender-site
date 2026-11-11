@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Ph from '../../components/Ph.astro';
+import YouTube from '../../components/YouTube.astro';
 import { PROJECTS, projectHref, type Project } from '../../data/projects';
 import { CONTACT } from '../../data/site';
 import '../../styles/pages.css';
@@ -83,6 +84,13 @@ const schema = [
         </div>
       )}
     </section>
+
+    {p.video && (
+      <section class="sec pad" aria-labelledby="video-h" style="padding-top:0">
+        <div class="sh"><h2 id="video-h" class="rv">The video</h2></div>
+        <YouTube url={p.video.url} title={p.video.title} class="rv" />
+      </section>
+    )}
 
     <section class="sec brand pad" aria-labelledby="brand-h">
       <div class="sh"><h2 id="brand-h" class="rv">The brand</h2><p class="rv">{p.mark ?? 'The logo in its light and dark versions.'}</p></div>

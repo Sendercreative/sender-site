@@ -43,6 +43,7 @@ export const WORK: Record<'logos' | 'videos' | 'websites', WorkItem[]> = {
   })),
   videos: [
     { name: 'Sender Reel', tag: 'Edit + Motion', year: '2026', video: { src: '/media/reel.mp4', poster: '/media/reel-poster.jpg' } },
+    { name: 'Gutter Sleeve explainer', tag: 'Explainer video', year: '2025', youtube: 'https://www.youtube.com/watch?v=E5VHcj4wQM8' },
   ],
   websites: PROJECTS.map((p) => ({
     name: p.name, tag: p.status === 'soon' ? 'Website · Soon' : 'Website', href: projectHref(p),

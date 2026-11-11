@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import YouTube from './YouTube.astro';
 import type { WorkItem } from '../data/site';
 
 interface Props { item: WorkItem; web?: boolean }
@@ -10,14 +11,12 @@ const y = p.youtube ? ytId(p.youtube) : null;
 const logo = p.img ?? p.inv;
 const href = y ? `https://youtu.be/${y}` : p.href ?? '#';
 const meta = [p.tag, p.year].filter(Boolean).join(' · ');
+const Tag = y ? 'div' : 'a';
+const attrs = y ? {} : { href };
 ---
-<a href={href} class="tile" {...(y ? { target: '_blank', rel: 'noopener' } : {})}>
+<Tag class="tile" {...attrs}>
   {y ? (
-    <div class="m wide">
-      <iframe
-        src={`https://www.youtube-nocookie.com/embed/${y}?autoplay=1&mute=1&loop=1&playlist=${y}&controls=0&playsinline=1&rel=0&modestbranding=1`}
-        title={p.name} allow="autoplay; encrypted-media" loading="lazy"></iframe>
-    </div>
+    <YouTube url={p.youtube!} title={p.name} class="m wide" />
   ) : p.video ? (
     <div class="m wide">
       <video class="lazyv" src={p.video.src} poster={p.video.poster} muted loop playsinline preload="none" aria-label={p.name}></video>
@@ -39,4 +38,4 @@ const meta = [p.tag, p.year].filter(Boolean).join(' · ');
     </div>
   )}
   <div class="cap"><span>{p.name}</span><span>{meta}</span></div>
-</a>
+</Tag>

@@ -40,6 +40,8 @@ export type Project = {
   /** One line under the title, and on cards */
   summary: string;
   story: { challenge: string; built: string; result: string };
+  /** YouTube link for a project video (explainer, brand film) */
+  video?: { url: string; title: string };
   /** What the logo means — shown beside the light/dark logos */
   mark?: string;
   /** What the brand package included */
@@ -110,6 +112,7 @@ const LIST: Project[] = [
       built: 'The brand and logo, the packaging, an explainer video, and a website to promote the product, built ready to take orders directly when they are.',
       result: 'Now building a client base and testing in retailers, with direct-to-consumer sales coming to the site next.',
     },
+    video: { url: 'https://www.youtube.com/watch?v=E5VHcj4wQM8', title: 'Gutter Sleeve explainer' },
     mark: 'A stylized G and S that looks like the product itself. Strong trade oranges and stark, simple imagery mean people know what it’s for before they read a word.',
     delivered: ['Logo suite', 'Brand fonts', 'Packaging', 'Explainer video', 'Full file package'],
   },
@@ -117,6 +120,7 @@ const LIST: Project[] = [
     slug: 'jb-controls',
     name: 'JB Controls',
     url: 'https://jbcontrols.ca/',
+    year: '2025',
     industry: 'Greenhouse control systems',
     services: ['Brand refresh', 'Logo', 'Website'],
     summary: 'New ownership, a new look. A refreshed brand and website for a company that builds and installs control systems for greenhouses.',

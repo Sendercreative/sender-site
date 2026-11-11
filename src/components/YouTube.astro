@@ -1,0 +1,40 @@
+---
+/**
+ * Lightweight YouTube embed: shows the thumbnail and a play button, and only
+ * loads YouTube (privacy-enhanced domain) once someone clicks. Keeps pages fast.
+ */
+interface Props { url: string; title: string; class?: string }
+const { url, title, class: cls } = Astro.props;
+const id = (url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/) || [])[1] ?? url;
+---
+<div class:list={['yt', cls]} data-yt={id} data-title={title}>
+  <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" width="480" height="360" />
+  <button type="button" class="yt-play" aria-label={`Play video: ${title}`}>
+    <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor" /></svg>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.yt[data-yt]').forEach((el) => {
+    el.querySelector('button')?.addEventListener('click', () => {
+      const f = document.createElement('iframe');
+      f.src = `https://www.youtube-nocookie.com/embed/${el.dataset.yt}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+      f.title = el.dataset.title || 'Video';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      f.allowFullscreen = true;
+      el.replaceChildren(f);
+      el.classList.add('on');
+    });
+  });
+</script>
+
+<style>
+  .yt { position: relative; aspect-ratio: 16 / 9; border-radius: 28px; overflow: hidden; background: #0a0a0a; isolation: isolate; }
+  .yt img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .85; transition: opacity .5s, transform 1.2s var(--ease); }
+  .yt:hover img { opacity: 1; transform: scale(1.03); }
+  .yt :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .yt-play { all: unset; cursor: pointer; position: absolute; left: 50%; top: 50%; width: 88px; height: 88px; margin: -44px 0 0 -44px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: #000; box-shadow: 0 20px 50px -10px rgba(0,0,0,.5); transition: transform .5s var(--ease); }
+  .yt-play svg { margin-left: 4px; }
+  .yt:hover .yt-play { transform: scale(1.1); }
+  .yt-play:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+</style>
