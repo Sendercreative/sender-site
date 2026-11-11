@@ -22,6 +22,10 @@ const meta = [p.tag, p.year].filter(Boolean).join(' · ');
     <div class="m wide">
       <video class="lazyv" src={p.video.src} poster={p.video.poster} muted loop playsinline preload="none" aria-label={p.name}></video>
     </div>
+  ) : p.shot ? (
+    <div class="m web shot">
+      <Image src={p.shot} alt={`${p.name} website`} widths={[480, 960, 1440]} sizes="(max-width:760px) 90vw, 40vw" loading="lazy" decoding="async" />
+    </div>
   ) : logo ? (
     <div class:list={['m', { dk: !p.img }]}>
       {logo.format === 'svg'

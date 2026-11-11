@@ -100,10 +100,10 @@ const schema = [
       <div class="devices rv">
         <figure class="browser">
           <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>{host}</span></div>
-          <Ph img={im.desktop} label="Desktop screenshot" size="1440 × 900" ratio="16/10" alt={`${p.name} website on desktop`} sizes="(max-width:760px) 100vw, 66vw" />
+          <Ph img={im.desktop} label="Desktop screenshot" size="2400 × 1200" ratio="2/1" alt={`${p.name} website on desktop`} sizes="(max-width:760px) 100vw, 66vw" />
         </figure>
         <figure class="phone">
-          <Ph img={im.mobile} label="Mobile" size="390 × 844" ratio="390/844" alt={`${p.name} website on mobile`} sizes="(max-width:760px) 60vw, 22vw" />
+          <Ph img={im.mobile} fit="cover" label="Mobile" size="1080 × 1955" ratio="1080/1955" alt={`${p.name} website on mobile`} sizes="(max-width:760px) 60vw, 22vw" />
         </figure>
       </div>
     </section>

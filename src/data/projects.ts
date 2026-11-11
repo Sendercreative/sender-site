@@ -17,6 +17,18 @@ import gsDark from '../assets/projects/gutter-sleeve/logo-dark.png';
 import jbLight from '../assets/projects/jb-controls/logo-light.png';
 import voidLight from '../assets/projects/void-cavitation/logo-light.svg';
 import voidDark from '../assets/projects/void-cavitation/logo-dark.svg';
+import sixDesk from '../assets/projects/6-days/desktop.jpg';
+import sixMob from '../assets/projects/6-days/mobile.jpg';
+import ventureDesk from '../assets/projects/venture-gutter-services/desktop.jpg';
+import ventureMob from '../assets/projects/venture-gutter-services/mobile.jpg';
+import gsDesk from '../assets/projects/gutter-sleeve/desktop.jpg';
+import gsMob from '../assets/projects/gutter-sleeve/mobile.jpg';
+import jbDesk from '../assets/projects/jb-controls/desktop.jpg';
+import jbMob from '../assets/projects/jb-controls/mobile.jpg';
+import owdpDesk from '../assets/projects/ontario-window-door-products/desktop.jpg';
+import owdpMob from '../assets/projects/ontario-window-door-products/mobile.jpg';
+import voidDesk from '../assets/projects/void-cavitation/desktop.jpg';
+import voidMob from '../assets/projects/void-cavitation/mobile.jpg';
 
 export type Project = {
   slug: string;
@@ -40,8 +52,8 @@ export type Project = {
     hero?: ImageMetadata;      // 2400×1350 (16:9)
     logoLight?: ImageMetadata; // logo on white, SVG or PNG
     logoDark?: ImageMetadata;  // logo on black, SVG or PNG
-    desktop?: ImageMetadata;   // 1440×900 browser screenshot
-    mobile?: ImageMetadata;    // 390×844 phone screenshot
+    desktop?: ImageMetadata;   // 2:1 browser screenshot, 2400×1200
+    mobile?: ImageMetadata;    // phone screenshot, bars cropped (~1080×1955)
     gallery?: ImageMetadata[]; // up to 3, 1600×1200 (4:3)
   };
 };
@@ -62,7 +74,7 @@ export const PROJECTS: Project[] = [
     services: ['Naming', 'Logo', 'Brand', 'Website'],
     ongoing: ['Social media', 'Email updates', 'Community growth'],
     summary: 'A home for Christian businesses in Canada: a directory, a job board and a community. Named, branded, built and run in-house.',
-    images: { logoLight: sixLight, logoDark: sixDark },
+    images: { logoLight: sixLight, logoDark: sixDark, desktop: sixDesk, mobile: sixMob },
     story: {
       challenge: 'Our Christian community had no single place to find its businesses or their job openings. Ben felt that gap first-hand while job hunting, then spent time talking with business owners to confirm they felt it too.',
       built: 'Everything. The name, the message, the brand and how the directory is organized, then the design and build of the site itself. One clear idea, carried through every piece.',
@@ -81,7 +93,7 @@ export const PROJECTS: Project[] = [
     industry: 'Gutters & exteriors',
     services: ['Logo', 'Brand', 'Website'],
     summary: '[One-line summary of the Venture project.]',
-    images: { logoLight: ventureLight, logoDark: ventureDark },
+    images: { logoLight: ventureLight, logoDark: ventureDark, desktop: ventureDesk, mobile: ventureMob },
     story: TBD,
   },
   {
@@ -91,7 +103,7 @@ export const PROJECTS: Project[] = [
     industry: 'Gutter repair product',
     services: ['Logo', 'Brand', 'Website'],
     summary: '[One-line summary of the Gutter Sleeve project.]',
-    images: { logoLight: gsLight, logoDark: gsDark },
+    images: { logoLight: gsLight, logoDark: gsDark, desktop: gsDesk, mobile: gsMob },
     story: TBD,
   },
   {
@@ -101,7 +113,7 @@ export const PROJECTS: Project[] = [
     industry: 'Controls & automation',
     services: ['Logo', 'Brand', 'Website'],
     summary: '[One-line summary of the JB Controls project.]',
-    images: { logoLight: jbLight },
+    images: { logoLight: jbLight, desktop: jbDesk, mobile: jbMob },
     story: TBD,
   },
   {
@@ -111,6 +123,7 @@ export const PROJECTS: Project[] = [
     industry: 'Windows & doors',
     services: ['Logo', 'Brand', 'Website'],
     summary: '[One-line summary of the OWDP project.]',
+    images: { desktop: owdpDesk, mobile: owdpMob },
     story: TBD,
   },
   {
@@ -121,7 +134,7 @@ export const PROJECTS: Project[] = [
     industry: 'Industrial technology',
     services: ['Logo', 'Brand', 'Website'],
     summary: '[One-line summary of the Void Cavitation launch.]',
-    images: { logoLight: voidLight, logoDark: voidDark },
+    images: { logoLight: voidLight, logoDark: voidDark, desktop: voidDesk, mobile: voidMob },
     story: TBD,
   },
 ];

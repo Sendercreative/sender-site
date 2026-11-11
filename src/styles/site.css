@@ -85,3 +85,6 @@ html.no-js .nav{opacity:1;transform:none}
 .fm .tph-l{font-size:clamp(24px,2.4vw,40px)}
 .fm.tph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.035) 0 1px,transparent 1px 14px)}
 .fm.tph.dk{background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 1px,transparent 1px 14px),linear-gradient(160deg,#1d1d1d,#0a0a0a 60%,#2e2e2e)}
+.tile .m.web.shot{aspect-ratio:2/1;padding:0;background:#e9e9e9}
+.tile .m.web.shot img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:top}
+.fm.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}

@@ -103,7 +103,7 @@ const schema = [
           <div class="pgrid">
             {PROJECTS.slice(0, 4).map((p) => (
               <a class="pcard rv" href={projectHref(p)}>
-                <Ph img={s.work === 'logos' ? p.images?.logoLight : p.images?.desktop} label={`${p.name} · ${s.work === 'logos' ? 'logo' : 'website'}`} size={s.work === 'logos' ? 'Logo' : '1440 × 900'} ratio="16/10" dark={s.work !== 'logos'} fit={s.work === 'logos' ? 'contain' : 'cover'} inset={s.work === 'logos' ? '22%' : undefined} alt="" sizes="(max-width:760px) 100vw, 50vw" />
+                <Ph img={s.work === 'logos' ? p.images?.logoLight : p.images?.desktop} label={`${p.name} · ${s.work === 'logos' ? 'logo' : 'website'}`} size={s.work === 'logos' ? 'Logo' : '2400 × 1200'} ratio={s.work === 'logos' ? '16/10' : '2/1'} dark={s.work !== 'logos'} fit={s.work === 'logos' ? 'contain' : 'cover'} inset={s.work === 'logos' ? '22%' : undefined} alt="" sizes="(max-width:760px) 100vw, 50vw" />
                 <div class="t"><h3>{p.name}</h3><span class="tag">{p.industry}</span></div>
               </a>
             ))}

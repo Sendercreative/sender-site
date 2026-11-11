@@ -37,6 +37,8 @@ const workHref = { logos: '/work/#branding', videos: '/work/#video', websites: '
                 <div class="fi">
                   {p.video ? (
                     <div class="fm dk"><video src={p.video.src} poster={p.video.poster} autoplay muted loop playsinline preload="metadata"></video></div>
+                  ) : p.shot ? (
+                    <div class="fm shot"><Image src={p.shot} alt="" widths={[640, 960]} sizes="40vw" loading="lazy" /></div>
                   ) : p.img ? (
                     <div class="fm"><Image src={p.img} alt="" width={480} loading={i < 2 ? 'eager' : 'lazy'} /></div>
                   ) : p.inv ? (
