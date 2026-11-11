@@ -109,11 +109,19 @@ const schema = [
     </section>
 
     <section class="sec pad" aria-label="Gallery">
-      <div class="gallery">
-        {[0, 1, 2].map((i) => (
-          <Ph img={im.gallery?.[i]} label={`Gallery ${i + 1}`} size="1600 × 1200" ratio="4/3" alt={`${p.name} project detail ${i + 1}`} sizes="(max-width:760px) 100vw, 33vw" class="rv" />
-        ))}
-      </div>
+      {im.gallery && im.gallery.length > 0 ? (
+        <div class:list={['gallery', `n${Math.min(im.gallery.length, 3)}`]}>
+          {im.gallery.map((g, i) => (
+            <Ph img={g} label="" ratio="4/3" alt={`${p.name}: brand in use ${i + 1}`} sizes="(max-width:760px) 100vw, 33vw" class="rv" />
+          ))}
+        </div>
+      ) : (
+        <div class="gallery n3">
+          {[0, 1, 2].map((i) => (
+            <Ph label={`Gallery ${i + 1}`} size="1600 × 1200" ratio="4/3" alt="" class="rv" />
+          ))}
+        </div>
+      )}
     </section>
 
     <nav class="nextp pad" aria-label="Next project">
