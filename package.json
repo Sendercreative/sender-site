@@ -1,0 +1,22 @@
+{
+  "name": "sender-creative",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "astro build && wrangler deploy"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.4.7",
+    "astro": "^7.4.10"
+  },
+  "devDependencies": {
+    "wrangler": "^4.160.0"
+  },
+  "type": "module"
+}
