@@ -12,7 +12,8 @@ const workHref = { logos: '/work/#branding', videos: '/work/#video', websites: '
 /** Homepage Websites panel: only these, in this order. */
 const homeSites = ['void-cavitation', '6-days', 'jb-controls']
   .map((slug) => W.websites.find((w) => w.href === `/work/${slug}/`))
-  .filter(Boolean);
+  .filter((w): w is NonNullable<typeof w> => Boolean(w))
+  .map((w) => ({ ...w, shot: undefined, phone: w.mshot }));
 const panel = { ...W, websites: homeSites };
 ---
 <Base page="home">
@@ -62,7 +63,7 @@ const panel = { ...W, websites: homeSites };
         {BOXES.map((b) => (
           <article class="box" id={`b-${b.key}`}>
             <div class="bxh"><div class="l"><h2>{b.label}</h2></div></div>
-            <div class={b.key === 'logos' ? 'lgrid' : 'vlist'}>
+            <div class={b.key === 'logos' ? 'lgrid' : b.key === 'websites' ? 'pgrid' : 'vlist'}>
               {panel[b.key].map((item) => <Tile item={item} web={b.key === 'websites'} />)}
             </div>
             <a href={workHref[b.key]} class="more">All {b.label.toLowerCase()} →</a>

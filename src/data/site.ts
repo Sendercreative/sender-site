@@ -31,6 +31,8 @@ export type WorkItem = {
   dark?: boolean;
   /** Website screenshot, shown full-bleed */
   shot?: ImageMetadata;
+  /** Phone screenshot, shown as a portrait tile */
+  mshot?: ImageMetadata;
   /** Where the tile links (case study) */
   href?: string;
   year?: string;
@@ -53,7 +55,7 @@ export const WORK: Record<'logos' | 'videos' | 'websites', WorkItem[]> = {
   videos: [GS_EXPLAINER],
   websites: PROJECTS.map((p) => ({
     name: p.name, tag: p.status === 'soon' ? 'Website · Soon' : 'Website', href: projectHref(p),
-    shot: p.images?.desktop, ph: 'Website screenshot', dark: true,
+    shot: p.images?.desktop, mshot: p.images?.mobile, ph: 'Website screenshot', dark: true,
   })),
 };
 

@@ -1,9 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import YouTube from './YouTube.astro';
+import type { ImageMetadata } from 'astro';
 import type { WorkItem } from '../data/site';
 
-interface Props { item: WorkItem; web?: boolean }
+interface Props { item: WorkItem & { phone?: ImageMetadata }; web?: boolean }
 const { item: p, web = false } = Astro.props;
 
 const ytId = (u: string) => (u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/) || [])[1] || u;
@@ -20,6 +21,10 @@ const attrs = y || p.video ? {} : { href };
   ) : p.video ? (
     <div class="m wide">
       <video class="lazyv" src={p.video.src} poster={p.video.poster} muted loop playsinline controls preload={p.video.poster ? 'none' : 'metadata'} aria-label={p.name}></video>
+    </div>
+  ) : p.phone ? (
+    <div class="m phone">
+      <Image src={p.phone} alt={`${p.name} website on a phone`} widths={[240, 480, 720]} sizes="(max-width:760px) 26vw, 18vw" loading="lazy" decoding="async" />
     </div>
   ) : p.shot ? (
     <div class="m web shot">

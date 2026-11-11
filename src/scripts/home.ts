@@ -1,5 +1,5 @@
 // Homepage C — Send: interactions ported from the Claude Design file.
-// State classes on <html>: s0/s1/s3 (intro sequence), docked, flyon, vline, mopen.
+// State classes on <html>: s0/s1/s3 (intro sequence), docked, flyon, mopen; .hout/.hin on the headline during a dock swap.
 
 type Hero = { word: string; lines: string[] };
 
@@ -55,6 +55,30 @@ const dots = [...rail.querySelectorAll('a')];
 const htxt = document.querySelector<HTMLElement>('.htxt')!;
 let cur = 0, word = HERO[0].word, ready = false;
 let swapT: ReturnType<typeof setTimeout> | undefined;
+let docked = false, docking = false, dockTok = 0;
+
+/* Docking: headline + lede slide down and fade, then slide back in from the left at docked size. */
+function dockTo(d: boolean) {
+  docked = d;
+  const tok = ++dockTok;
+  if (reduced) { R.classList.toggle('docked', d); fit(); placeFor(1400); return; }
+  docking = true;
+  const els = [hblk, lede];
+  els.forEach((e) => { e.classList.remove('hin'); e.classList.add('hout'); });
+  placeFor(600);
+  setTimeout(() => {
+    if (tok !== dockTok) return;
+    R.classList.toggle('docked', d);
+    fit();
+    els.forEach((e) => { e.classList.add('hin'); e.classList.remove('hout'); });
+    void hblk.offsetWidth;
+    placeFor(1400);
+    requestAnimationFrame(() => {
+      els.forEach((e) => e.classList.remove('hin'));
+      setTimeout(() => { if (tok === dockTok) docking = false; }, 400);
+    });
+  }, 500);
+}
 
 function setWord(w: string) {
   if (w === word) return;
@@ -78,21 +102,12 @@ function maxW() {
 }
 
 function fit() {
-  R.classList.toggle('vline', R.classList.contains('docked') && innerWidth <= 760);
-  if (!R.classList.contains('docked')) { hblk.style.transformOrigin = ''; hblk.style.transform = 'none'; return; }
-  if (innerWidth <= 760) {
-    const w = hblk.offsetWidth, h = hblk.offsetHeight;
-    const thick = innerWidth * 0.22 - 14, len = innerHeight * 0.8;
-    const sc = Math.min(1, thick / h, len / w);
-    const X = 8 - hblk.offsetLeft, Y = (innerHeight + w * sc) / 2 - hblk.offsetTop;
-    hblk.style.transformOrigin = '0 0';
-    hblk.style.transform = `translate(${X}px,${Y}px) rotate(-90deg) scale(${sc})`;
-    return;
-  }
   hblk.style.transformOrigin = '';
+  // Mobile: docked size comes from CSS (smaller, top-left, horizontal)
+  if (!R.classList.contains('docked') || innerWidth <= 760) { hblk.style.transform = 'none'; return; }
   const pad = parseFloat(getComputedStyle(htxt).paddingLeft);
   const col = innerWidth - innerWidth * 0.56 - pad - 110;
-  hblk.style.transform = `scale(${Math.min(1, col / maxW())})`;
+  hblk.style.transform = `scale(${Math.min(0.7, col / maxW())})`;
 }
 
 function setLines(i: number) {
@@ -101,6 +116,10 @@ function setLines(i: number) {
   cur = i;
   ag.setAttribute('aria-label', `${HERO[i].word} ${HERO[i].lines.join(' ')}`);
   clearTimeout(swapT);
+  if (docking) {
+    ag.innerHTML = HERO[i].lines.map((t) => `<span class="pop on" aria-hidden="true"><span>${t}</span></span>`).join('');
+    return;
+  }
   [...ag.children].forEach((o) => { o.classList.remove('on'); o.classList.add('out'); });
   swapT = setTimeout(() => {
     ag.innerHTML = HERO[i].lines.map((t) => `<span class="pop" aria-hidden="true"><span>${t}</span></span>`).join('');
@@ -118,7 +137,7 @@ function onScroll() {
 }
 function update() {
   const y = scrollY, d = y > 30;
-  if (d !== R.classList.contains('docked')) { R.classList.toggle('docked', d); fit(); placeFor(1400); }
+  if (d !== docked) dockTo(d);
   let idx = -1;
   boxes.forEach((b, i) => { if (b.getBoundingClientRect().top < innerHeight * 0.55) idx = i; });
   let k = 0;
