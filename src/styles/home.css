@@ -195,3 +195,23 @@
 }
 .tile .m.photo{padding:0}
 .tile .m.photo img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:center}
+
+/* ── "Marketing is complicated" → pieces fly into the process steps ── */
+.mess{position:relative;background:#fff;color:#000;min-height:100svh;display:grid;place-items:center;overflow:hidden}
+.mess-field{position:absolute;inset:clamp(24px,4vw,60px) var(--padx) clamp(24px,4vw,60px) var(--padl)}
+.mess-h{position:relative;z-index:1;text-align:center;font:700 clamp(56px,9.2vw,168px)/.88 var(--disp);letter-spacing:-.035em;max-width:9ch;margin:0 auto}
+.tk{display:inline-grid;place-items:center;color:#000;line-height:1}
+.tk svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tk b{font:500 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.mess-field .tk{position:absolute;transform:translate(-50%,-50%) rotate(var(--r));}
+.mess-field .tk>*{animation:tkf 7s ease-in-out infinite;animation-delay:var(--fd)}
+@keyframes tkf{0%,100%{translate:0 0}50%{translate:0 -7px}}
+.slots{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:14px 16px;margin-top:22px;padding-top:18px;border-top:1px solid rgba(0,0,0,.12)}
+.slots .tk{height:22px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* JS on: hide the real pieces while their flying copy is in transit */
+.kfx .tk.kh{visibility:hidden}
+.kfly{position:fixed;left:0;top:0;z-index:40;pointer-events:none;will-change:transform}
+@media(prefers-reduced-motion:reduce){.mess-field .tk>*{animation:none}}
+@media(max-width:760px){.mess-h{font-size:min(12.5vw,80px)}.mess{min-height:110svh}.tk svg{width:20px;height:20px}.tk b{font-size:10px}}
+@media(min-width:761px){.step{display:flex;flex-direction:column}.step>p{flex:1}}

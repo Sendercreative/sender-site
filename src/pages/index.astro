@@ -7,11 +7,13 @@ import voidBrand from '../assets/home/void-brand.jpg';
 import sixDaysBrand from '../assets/home/6days-brand.jpg';
 import jbBrand from '../assets/home/jb-brand.jpg';
 import { WORK, BOXES, HERO, PROCESS, SYSTEM, CHOICES, CONTACT } from '../data/site';
+import { PIECES, ICONS, scatter } from '../data/mess';
 import '../styles/home.css';
 
 const W = WORK;
 const deck = [W.logos[0], W.websites[1], W.logos[3], W.websites[5], W.logos[2], W.websites[4], W.logos[4]].filter(Boolean);
 const letters = (s: string) => [...s];
+const spots = scatter(PIECES.map((p) => !!p.word));
 const workHref = { logos: '/work/#branding', videos: '/work/#video', websites: '/work/#websites' } as const;
 /** Homepage Websites panel: only these, in this order. */
 const homeSites = ['void-cavitation', '6-days', 'jb-controls']
@@ -88,15 +90,33 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
       </div>
     </section>
 
+    <section class="mess pad" id="mess" aria-labelledby="mess-h">
+      <div class="mess-field" aria-hidden="true">
+        {PIECES.map((pc, i) => (
+          <span class="tk" data-k={i} style={`left:${spots[i]?.x ?? 50}%;top:${spots[i]?.y ?? 50}%;--r:${spots[i]?.r ?? 0}deg;--fd:${(i % 7) * -0.9}s`}>
+            {pc.icon ? <svg viewBox="0 0 24 24" set:html={ICONS[pc.icon]} /> : <b>{pc.word}</b>}
+          </span>
+        ))}
+      </div>
+      <h2 class="mess-h rv" id="mess-h">Marketing is complicated.</h2>
+    </section>
+
     <section class="sec proc pad" id="process" aria-labelledby="process-h">
       <p class="eyebrow">Our process</p>
-      <h2 class="rv" id="process-h">Simple on your end.</h2>
+      <h2 class="rv" id="process-h">We simplify it for you.</h2>
       <ol class="steps">
         {PROCESS.map((st, i) => (
           <li class="step rv" style={`--d:${i * 0.08}s`}>
             <span class="num">{String(i + 1).padStart(2, '0')}</span>
             <h3>{st.title}</h3>
             <p>{st.blurb}</p>
+            <ul class="slots" aria-label={`What this step covers`}>
+              {PIECES.map((pc, k) => pc.step === i && (
+                <li class="tk slot" data-k={k} title={pc.label}>
+                  {pc.icon ? <><svg viewBox="0 0 24 24" aria-hidden="true" set:html={ICONS[pc.icon]} /><span class="sr">{pc.label}</span></> : <b>{pc.word}</b>}
+                </li>
+              ))}
+            </ul>
           </li>
         ))}
       </ol>

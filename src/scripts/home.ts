@@ -197,3 +197,57 @@ document.fonts.ready.then(() => {
   setTimeout(() => { R.classList.add('s3'); ready = true; update(); }, T[3]);
   setTimeout(() => R.classList.add('hero-rest'), reduced ? 0 : 10000);
 });
+
+/* ── "Marketing is complicated": scattered pieces fly into rows under the process steps ── */
+(() => {
+  const mess = document.getElementById('mess'), proc = document.getElementById('process');
+  if (!mess || !proc || reduced) return;
+  const src = [...mess.querySelectorAll<HTMLElement>('.mess-field .tk')];
+  const dst = new Map([...proc.querySelectorAll<HTMLElement>('.slot')].map((el) => [el.dataset.k!, el]));
+  const pairs = src.map((s, i) => {
+    const t = dst.get(s.dataset.k!)!;
+    const f = document.createElement('span');
+    f.className = 'tk kfly';
+    f.setAttribute('aria-hidden', 'true');
+    f.innerHTML = s.innerHTML;
+    f.style.display = 'none';
+    document.body.appendChild(f);
+    const rot = parseFloat(getComputedStyle(s).getPropertyValue('--r')) || 0;
+    return { s, t, f, rot, d: ((i * 37) % 17) / 17 * 0.35 };
+  }).filter((p) => p.t);
+  R.classList.add('kfx');
+
+  const ease = (x: number) => x * x * (3 - 2 * x);
+  let on = false, q = false, until = 0;
+  function frame() {
+    q = false;
+    const vh = innerHeight, span = innerWidth <= 760 ? 0.45 : 0.75;
+    for (const p of pairs) {
+      const tr = p.t.getBoundingClientRect();
+      // 0 while the slot is well below the fold, 1 once it reaches ~62% of the screen
+      const raw = 1 - (tr.top - vh * 0.62) / (vh * span);
+      const k = Math.min(1, Math.max(0, (raw - p.d) / (1 - p.d)));
+      const flying = k > 0 && k < 1;
+      p.s.classList.toggle('kh', k > 0);
+      p.t.classList.toggle('kh', k < 1);
+      if (!flying) { if (p.f.style.display !== 'none') p.f.style.display = 'none'; continue; }
+      const sr = p.s.getBoundingClientRect(), e = ease(k);
+      const sx = sr.left + sr.width / 2, sy = sr.top + sr.height / 2;
+      const tx = tr.left + tr.width / 2, ty = tr.top + tr.height / 2;
+      const x = sx + (tx - sx) * e, y = sy + (ty - sy) * e - Math.sin(e * Math.PI) * 60;
+      p.f.style.display = '';
+      p.f.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) rotate(${p.rot * (1 - e)}deg)`;
+    }
+    // keep going briefly after scrolling stops, so reveal animations that move the slots are tracked
+    if (performance.now() < until) { q = true; requestAnimationFrame(frame); }
+  }
+  const tick = () => { until = performance.now() + 1400; if (on && !q) { q = true; requestAnimationFrame(frame); } };
+  new IntersectionObserver((es) => {
+    on = es.some((e) => e.isIntersecting) || [mess, proc].some((el) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; });
+    if (on) tick(); else pairs.forEach((p) => (p.f.style.display = 'none'));
+  }, { rootMargin: '200px 0px' }).observe(mess);
+  new IntersectionObserver(() => { on = true; tick(); }, { rootMargin: '200px 0px' }).observe(proc);
+  addEventListener('scroll', tick, { passive: true });
+  addEventListener('resize', tick);
+  frame();
+})();

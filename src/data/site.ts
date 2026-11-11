@@ -47,6 +47,7 @@ export const VIDEO_LIBRARY: WorkItem[] = [
   { name: 'Dicam overview', tag: 'Overview video', video: { src: 'https://cdn.capturestudio.ca/Dicam/Dicam-overview.mp4' } },
   GS_EXPLAINER,
   { name: 'Round 2 Tires', tag: 'Social reel', instagram: 'https://www.instagram.com/reel/DdSMpJ7R2b5/' },
+  { name: 'Mercy Church', tag: 'Video', youtube: 'https://www.youtube.com/watch?v=m2QR6L9595k' },
 ];
 
 export const WORK: Record<'logos' | 'videos' | 'websites', WorkItem[]> = {
