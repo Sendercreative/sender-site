@@ -2,46 +2,15 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Tile from '../components/Tile.astro';
-import { WORK, BOXES, HERO, PROCESS, SYSTEM, CHOICES, PAGES, CONTACT } from '../data/site';
+import { WORK, BOXES, HERO, PROCESS, SYSTEM, CHOICES, CONTACT } from '../data/site';
 import '../styles/home.css';
 
 const W = WORK;
 const deck = [W.logos[0], W.videos[0], W.logos[2], W.logos[1], W.websites[0], W.logos[3], W.logos[4]].filter(Boolean);
 const letters = (s: string) => [...s];
+const workHref = { logos: '/work/#branding', videos: '/work/#video', websites: '/work/#websites' } as const;
 ---
-<Base>
-  <nav class="nav pad" aria-label="Primary">
-    <a href="/" class="logo" id="logo" aria-label="Sender Creative home">
-      <span class="lm"><img src="/media/sender-white.png" alt="" width="1257" height="219" /></span>
-      <span class="lw"><img src="/media/sender-white.png" alt="" width="1257" height="219" /></span>
-    </a>
-    <button class="mbtn" id="mbtn" aria-label="Menu" aria-expanded="false" aria-controls="ov">
-      <span class="w" aria-hidden="true"><span>Menu</span><span>Menu</span><span>Close</span></span>
-      <span class="ic" aria-hidden="true"><i></i><i></i></span>
-    </button>
-  </nav>
-
-  <div class="ov" id="ov" aria-hidden="true">
-    <div class="bgfx" aria-hidden="true"><b></b><b></b><b></b></div>
-    <div class="mask pad">
-      <nav class="mlist" id="mlist" aria-label="Menu">
-        {PAGES.map((p, i) => (
-          <a class="ml" href={p.href} data-i={i} data-title={p.title} data-blurb={p.blurb} tabindex="-1">
-            <span aria-hidden="true">{letters(p.title).map((c, j) => <i style={`transition-delay:${(0.25 + i * 0.07 + j * 0.025).toFixed(3)}s`}>{c}</i>)}</span>
-            <span class="sr-only">{p.title}</span>
-          </a>
-        ))}
-      </nav>
-    </div>
-    <div class="mprev" id="mprev" aria-hidden="true"><b></b><span></span></div>
-    <div class="mfoot pad">
-      <a href={`mailto:${CONTACT.email}`} tabindex="-1">{CONTACT.email}</a>
-      <span>{CONTACT.location}</span>
-      <span><a href={CONTACT.instagram} tabindex="-1">Instagram</a> · <a href={CONTACT.linkedin} tabindex="-1">LinkedIn</a></span>
-    </div>
-  </div>
-
-  <main>
+<Base page="home">
     <section class="stage" id="stage" aria-label="Introduction and work">
       <div class="pin">
         <div class="bgfx" aria-hidden="true"><b></b><b></b><b></b></div>
@@ -89,7 +58,7 @@ const letters = (s: string) => [...s];
             <div class={b.key === 'logos' ? 'lgrid' : 'vlist'}>
               {W[b.key].map((item) => <Tile item={item} />)}
             </div>
-            <a href="#" class="more">All {b.label.toLowerCase()} →</a>
+            <a href={workHref[b.key]} class="more">All {b.label.toLowerCase()} →</a>
           </article>
         ))}
       </div>
@@ -145,20 +114,6 @@ const letters = (s: string) => [...s];
       <div class="sfoot"><p>Just need social, or a website? Start there. The rest can come later.</p><a href={CONTACT.booking}>Book a visit →</a></div>
     </section>
 
-    <section class="end pad" id="contact" aria-labelledby="contact-h">
-      <p class="eyebrow" style="margin-bottom:28px">Start here</p>
-      <h2 class="rv" id="contact-h">Ready to send it?</h2>
-      <div class="cta-row">
-        <a class="btn-light" href={CONTACT.booking}>Book a visit →</a>
-        <a class="mail" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-      </div>
-      <div class="big" role="img" aria-label="Sender"></div>
-      <footer class="foot" style="padding-left:0;padding-right:0">
-        <span>© {new Date().getFullYear()} Sender Creative · Marketing agency serving {CONTACT.areas}, Ontario</span>
-        <span><a href={CONTACT.instagram}>Instagram</a> · <a href={CONTACT.linkedin}>LinkedIn</a></span>
-      </footer>
-    </section>
-  </main>
 
   <script id="hero-data" type="application/json" set:html={JSON.stringify(HERO)} />
   <script src="../scripts/home.ts"></script>

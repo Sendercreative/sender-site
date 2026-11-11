@@ -1,0 +1,109 @@
+// Site-wide behaviour: reveal-on-scroll, lazy videos, menu, logo spin, smooth scrolling.
+// The homepage adds its hero choreography on top (home.ts) and owns the s1/docked classes there.
+
+const R = document.documentElement;
+const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isHome = !!document.getElementById('stage');
+
+if (!isHome) {
+  R.classList.add('s1', 's3');
+  const dock = () => R.classList.toggle('docked', scrollY > 30);
+  addEventListener('scroll', dock, { passive: true });
+  dock();
+}
+
+/* ── Reveal on scroll ── */
+const io = new IntersectionObserver(
+  (es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }),
+  { threshold: 0.15 },
+);
+document.querySelectorAll('.rv').forEach((el) => io.observe(el));
+
+/* ── Below-the-fold videos: only download and play while on screen ── */
+const vio = new IntersectionObserver((es) => es.forEach((e) => {
+  const v = e.target as HTMLVideoElement;
+  if (e.isIntersecting) { if (!reduced) v.play().catch(() => {}); } else v.pause();
+}), { rootMargin: '200px 0px' });
+document.querySelectorAll<HTMLVideoElement>('video.lazyv').forEach((v) => vio.observe(v));
+
+/* ── Full-screen menu ── */
+const ml = $('mlist'), mp = $('mprev'), ov = $('ov'), mb = $<HTMLButtonElement>('mbtn');
+const menuLinks = [...ov.querySelectorAll<HTMLAnchorElement>('a')];
+ml.querySelectorAll<HTMLAnchorElement>('.ml').forEach((a) => {
+  a.addEventListener('mouseenter', () => {
+    mp.querySelector('b')!.textContent = a.dataset.title || '';
+    mp.querySelector('span')!.textContent = a.dataset.blurb || '';
+    mp.classList.add('on');
+  });
+  a.addEventListener('mouseleave', () => mp.classList.remove('on'));
+  a.addEventListener('click', () => toggleMenu(false));
+});
+function toggleMenu(o: boolean) {
+  const r = mb.querySelector('.ic')!.getBoundingClientRect();
+  ov.style.setProperty('--cx', `${r.left + r.width / 2}px`);
+  ov.style.setProperty('--cy', `${r.top + r.height / 2}px`);
+  if (!o && R.classList.contains('mopen')) { ov.classList.add('closing'); setTimeout(() => ov.classList.remove('closing'), 1100); }
+  R.classList.toggle('mopen', o);
+  ov.setAttribute('aria-hidden', String(!o));
+  mb.setAttribute('aria-expanded', String(o));
+  mb.setAttribute('aria-label', o ? 'Close menu' : 'Menu');
+  menuLinks.forEach((a) => a.setAttribute('tabindex', o ? '0' : '-1'));
+  if (o) setTimeout(() => (ml.querySelector('a') as HTMLElement | null)?.focus({ preventScroll: true }), 400);
+  if (!o) ml.querySelectorAll<HTMLElement>('i').forEach((i) => {
+    const d = i.style.transitionDelay;
+    i.style.transitionDelay = '0s';
+    setTimeout(() => (i.style.transitionDelay = d), 1100);
+  });
+}
+mb.addEventListener('click', () => toggleMenu(!R.classList.contains('mopen')));
+addEventListener('keydown', (e) => { if (e.key === 'Escape' && R.classList.contains('mopen')) { toggleMenu(false); mb.focus(); } });
+
+/* ── Logo mark spins with scroll velocity ── */
+{
+  const logo = $('logo');
+  let lastY = scrollY, rot = 0, vel = 0;
+  (function spin() {
+    const y = scrollY;
+    vel += (y - lastY - vel) * 0.2;
+    lastY = y;
+    rot += vel * 0.35;
+    logo.style.setProperty('--r', `${rot}deg`);
+    requestAnimationFrame(spin);
+  })();
+}
+
+/* ── Smoothed wheel scrolling + in-page anchor glide ── */
+if (!reduced) {
+  let tgt = scrollY, pos = scrollY, run = false;
+  const max = () => document.documentElement.scrollHeight - innerHeight;
+  const step = () => {
+    pos += (tgt - pos) * 0.085;
+    if (Math.abs(tgt - pos) < 0.4) { pos = tgt; run = false; }
+    scrollTo(0, pos);
+    if (run) requestAnimationFrame(step);
+  };
+  const go = (t: number) => {
+    tgt = Math.max(0, Math.min(max(), t));
+    if (!run) { run = true; pos = scrollY; requestAnimationFrame(step); }
+  };
+  addEventListener('wheel', (e) => {
+    if (R.classList.contains('mopen')) { e.preventDefault(); return; }
+    if (e.ctrlKey) return;
+    e.preventDefault();
+    go((run ? tgt : scrollY) + e.deltaY * (e.deltaMode === 1 ? 32 : 1));
+  }, { passive: false });
+  addEventListener('scroll', () => { if (!run) tgt = pos = scrollY; }, { passive: true });
+  document.addEventListener('click', (e) => {
+    const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"], a[href^="/#"]');
+    if (!a) return;
+    const hash = a.getAttribute('href')!.replace(/^\//, '');
+    if (hash.length < 2) return;
+    const el = document.querySelector<HTMLElement>(hash);
+    if (el) {
+      e.preventDefault();
+      go(el.getBoundingClientRect().top + scrollY - (el.classList.contains('box') ? innerHeight * 0.3 : 0));
+    }
+  });
+}
+

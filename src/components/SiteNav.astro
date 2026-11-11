@@ -1,0 +1,35 @@
+---
+import { PAGES, CONTACT } from '../data/site';
+const letters = (s: string) => [...s];
+---
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav pad" aria-label="Primary">
+  <a href="/" class="logo" id="logo" aria-label="Sender Creative home">
+    <span class="lm"><img src="/media/sender-white.png" alt="" width="1257" height="219" /></span>
+    <span class="lw"><img src="/media/sender-white.png" alt="" width="1257" height="219" /></span>
+  </a>
+  <button class="mbtn" id="mbtn" aria-label="Menu" aria-expanded="false" aria-controls="ov">
+    <span class="w" aria-hidden="true"><span>Menu</span><span>Menu</span><span>Close</span></span>
+    <span class="ic" aria-hidden="true"><i></i><i></i></span>
+  </button>
+</nav>
+
+<div class="ov" id="ov" aria-hidden="true">
+  <div class="bgfx" aria-hidden="true"><b></b><b></b><b></b></div>
+  <div class="mask pad">
+    <nav class="mlist" id="mlist" aria-label="Menu">
+      {PAGES.map((p, i) => (
+        <a class="ml" href={p.href} data-i={i} data-title={p.title} data-blurb={p.blurb} tabindex="-1">
+          <span aria-hidden="true">{letters(p.title).map((c, j) => <i style={`transition-delay:${(0.25 + i * 0.07 + j * 0.025).toFixed(3)}s`}>{c}</i>)}</span>
+          <span class="sr-only">{p.title}</span>
+        </a>
+      ))}
+    </nav>
+  </div>
+  <div class="mprev" id="mprev" aria-hidden="true"><b></b><span></span></div>
+  <div class="mfoot pad">
+    <a href={`mailto:${CONTACT.email}`} tabindex="-1">{CONTACT.email}</a>
+    <a href={`tel:${CONTACT.phoneHref}`} tabindex="-1">{CONTACT.phone}</a>
+    <span><a href={CONTACT.instagram} tabindex="-1">Instagram</a> · <a href={CONTACT.linkedin} tabindex="-1">LinkedIn</a></span>
+  </div>
+</div>

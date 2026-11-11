@@ -1,0 +1,35 @@
+---
+import { CONTACT, SERVICE_LINKS } from '../data/site';
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+}
+const { eyebrow = 'Start here', heading = 'Ready to send it?' } = Astro.props;
+---
+<section class="end pad" id="contact" aria-labelledby="contact-h">
+  <p class="eyebrow" style="margin-bottom:28px">{eyebrow}</p>
+  <h2 class="rv" id="contact-h">{heading}</h2>
+  <div class="cta-row">
+    <a class="btn-light" href={CONTACT.booking}>Book a visit →</a>
+    <a class="mail" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+  </div>
+  <div class="big" role="img" aria-label="Sender"></div>
+  <footer class="foot site-foot">
+    <div>
+      <p>© {new Date().getFullYear()} Sender Creative Inc.</p>
+      <p>Marketing agency serving {CONTACT.areas}, Ontario</p>
+      <p><a href={`tel:${CONTACT.phoneHref}`}>{CONTACT.phone}</a></p>
+    </div>
+    <nav aria-label="Services">
+      {SERVICE_LINKS.map((s) => <a href={s.href}>{s.title}</a>)}
+    </nav>
+    <nav aria-label="Site">
+      <a href="/work/">Work</a>
+      <a href="/services/">Services</a>
+      <a href="/contact/">Contact</a>
+      <a href={CONTACT.instagram}>Instagram</a>
+      <a href={CONTACT.linkedin}>LinkedIn</a>
+    </nav>
+  </footer>
+</section>

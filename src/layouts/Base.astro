@@ -1,25 +1,43 @@
 ---
 import '@fontsource-variable/jost/wght.css';
 import '../styles/global.css';
+import '../styles/site.css';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import { CONTACT } from '../data/site';
 
 interface Props {
   title?: string;
   description?: string;
+  /** Extra JSON-LD objects for this page (Service, FAQPage, BreadcrumbList…) */
+  schema?: Record<string, unknown>[];
+  /** Closing CTA wording */
+  ctaEyebrow?: string;
+  ctaHeading?: string;
+  /** Inner pages start with the nav in its docked, light-on-dark-text state */
+  page?: 'home' | 'inner';
 }
 
 const {
   title = 'Sender Creative | Marketing Agency in Hamilton, Haldimand & Norfolk',
   description = 'We build marketing systems for local businesses in Hamilton, Haldimand and Norfolk: branding, websites, local SEO, social, ads and video. Book a visit.',
+  schema = [],
+  ctaEyebrow,
+  ctaHeading,
+  page = 'inner',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const jsonLd = {
+const org = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
+  '@id': `${Astro.site?.href}#org`,
   name: 'Sender Creative',
+  legalName: 'Sender Creative Inc.',
   url: Astro.site?.href,
   email: CONTACT.email,
+  telephone: CONTACT.phoneHref,
+  logo: new URL('/favicon.svg', Astro.site).href,
   description: 'Marketing agency for local businesses: branding, websites, local SEO, social media, ads, photo and video.',
   areaServed: ['Hamilton', 'Haldimand County', 'Norfolk County'].map((name) => ({ '@type': 'AdministrativeArea', name })),
   knowsAbout: ['Branding', 'Web design', 'Local SEO', 'Google Business Profile', 'Social media marketing', 'Google Ads', 'Video production'],
@@ -27,7 +45,7 @@ const jsonLd = {
 };
 ---
 <!doctype html>
-<html lang="en-CA" class="no-js">
+<html lang="en-CA" class:list={['no-js', { inner: page === 'inner' }]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -46,12 +64,17 @@ const jsonLd = {
     <meta property="og:locale" content="en_CA" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="preload" href="/fonts/zelltin-black.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/zelltin-medium.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/zelltin-regular.woff2" as="font" type="font/woff2" crossorigin />
+    {page === 'home' && <link rel="preload" href="/fonts/zelltin-black.woff2" as="font" type="font/woff2" crossorigin />}
     <script is:inline>document.documentElement.classList.replace('no-js','js')</script>
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify([org, ...schema])} />
   </head>
   <body>
-    <slot />
+    <SiteNav />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter eyebrow={ctaEyebrow} heading={ctaHeading} />
+    <script src="../scripts/site.ts"></script>
   </body>
 </html>

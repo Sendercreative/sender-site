@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import { SERVICES } from '../data/services';
+import { PROCESS, CONTACT } from '../data/site';
+import '../styles/pages.css';
+
+const site = Astro.site!.href;
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Marketing services',
+    itemListElement: SERVICES.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.title, url: new URL(`/${s.slug}/`, site).href })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: new URL('/services/', site).href },
+    ],
+  },
+];
+---
+<Base
+  title="Marketing Services for Local Businesses in Hamilton, Haldimand & Norfolk | Sender Creative"
+  description="Full-package marketing for local businesses: branding, websites, local SEO, photo and video, graphic design, marketing management and consultation. Built as one system."
+  schema={schema}
+>
+  <div class="pg">
+    <header class="pg-hero pad">
+      <div class="hero-orb" aria-hidden="true"></div>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Services</span></nav>
+      <h1 class="rv">Full-package marketing for local businesses.</h1>
+      <p class="lead rv">Pick the piece you need, or let us build all of it as one system: brand, website, Google, social, follow-up and tracking, set up in your name and working together.</p>
+      <div class="btns rv">
+        <a class="btn dark" href={CONTACT.booking}>Book a visit →</a>
+        <a class="btn line" href="/#system">How the system fits together</a>
+      </div>
+    </header>
+
+    <section class="sec pad" aria-label="Services" style="padding-top:0">
+      <div class="cards">
+        {SERVICES.map((s) => (
+          <a class="card rv" href={`/${s.slug}/`}>
+            <span class="k">{s.layer}</span>
+            <h2>{s.title}</h2>
+            <p>{s.description}</p>
+            <span class="go">Explore →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="sec pad" aria-labelledby="proc-h" style="padding-top:0">
+      <div class="sh"><h2 id="proc-h" class="rv">How every project starts</h2><p class="rv">Whether you need one piece or the whole system, it starts the same way.</p></div>
+      <ol class="trio" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+        {PROCESS.map((p, i) => (
+          <li class="dots rv">
+            <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{p.title}</h3>
+            <p>{p.blurb}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </div>
+</Base>
+
+<style>
+  @media (max-width: 1000px) { ol.trio { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+  @media (max-width: 760px) { ol.trio { grid-template-columns: 1fr !important; } }
+</style>

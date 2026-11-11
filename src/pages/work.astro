@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import Tile from '../components/Tile.astro';
+import { WORK, CONTACT } from '../data/site';
+import '../styles/pages.css';
+
+const GROUPS = [
+  { id: 'branding', key: 'logos', title: 'Branding', blurb: 'Logos and identities for local businesses, built to look right everywhere they show up.', service: '/logo-design-branding/' },
+  { id: 'video', key: 'videos', title: 'Video', blurb: 'Shot and edited in-house: brand films, reels and motion.', service: '/photo-video/' },
+  { id: 'websites', key: 'websites', title: 'Websites', blurb: 'Fast, clear sites built to turn visitors into calls.', service: '/website-lead-capture/' },
+] as const;
+
+const site = Astro.site!.href;
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Work',
+    url: new URL('/work/', site).href,
+    about: { '@id': `${site}#org` },
+  },
+];
+---
+<Base
+  title="Our Work: Branding, Video & Websites | Sender Creative"
+  description="Logos, brand identities, video and websites made by Sender Creative for local businesses across Hamilton, Haldimand and Norfolk."
+  schema={schema}
+>
+  <div class="pg">
+    <header class="pg-hero pad">
+      <div class="hero-orb" aria-hidden="true"></div>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Work</span></nav>
+      <h1 class="rv">Work for people who build things.</h1>
+      <p class="lead rv">A selection of brands, films and websites we’ve made for local businesses.</p>
+      <div class="btns rv">
+        {GROUPS.map((g) => <a class="btn line" href={`#${g.id}`}>{g.title}</a>)}
+      </div>
+    </header>
+
+    <section class="sec wstrip pad" aria-label="Portfolio">
+      {GROUPS.map((g) => (
+        <div class="wg" id={g.id}>
+          <div class="sh dots" style="padding-top:clamp(24px,3vw,40px)">
+            <h2 class="rv">{g.title}</h2>
+            <p class="rv">{g.blurb} <a href={g.service} style="border-bottom:1px solid">More on {g.title.toLowerCase()} →</a></p>
+          </div>
+          <div class:list={['wgrid', { two: WORK[g.key].length < 3 }]}>
+            {WORK[g.key].map((item) => <Tile item={item} />)}
+          </div>
+        </div>
+      ))}
+    </section>
+  </div>
+</Base>

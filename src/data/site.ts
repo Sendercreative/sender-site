@@ -1,3 +1,4 @@
+import { SERVICES as SERVICES_DATA } from './services';
 import type { ImageMetadata } from 'astro';
 import gutterSleeve from '../assets/work/gutter-sleeve.png';
 import gutterSleeveWhite from '../assets/work/gutter-sleeve-white.png';
@@ -11,6 +12,8 @@ import sixDaysWhite from '../assets/work/six-days-white.svg';
 
 export const CONTACT = {
   email: 'hello@sendercreative.ca',
+  phone: '905-517-4522',
+  phoneHref: '+19055174522',
   location: 'Ontario, Canada',
   areas: 'Hamilton, Haldimand & Norfolk',
   instagram: '#',
@@ -94,8 +97,10 @@ export const CHOICES = [
 ];
 
 export const PAGES = [
-  { title: 'Work', href: '/#work', blurb: 'Logos, videos and websites for the people who build things.' },
+  { title: 'Work', href: '/work/', blurb: 'Logos, videos and websites for local businesses.' },
+  { title: 'Services', href: '/services/', blurb: 'Branding, websites, local SEO, photo + video, design and management.' },
   { title: 'Process', href: '/#process', blurb: 'Book a visit. We check what’s working, build the system, and hand you the keys or run it.' },
-  { title: 'System', href: '/#system', blurb: 'Strategy, brand, website, getting found, follow-up and tracking, built to work together.' },
-  { title: 'Contact', href: '/#contact', blurb: 'Book a visit. We’ll take it from there.' },
+  { title: 'Contact', href: '/contact/', blurb: 'Book a visit. We’ll take it from there.' },
 ];
+
+export const SERVICE_LINKS = SERVICES_DATA.map((s) => ({ title: s.short, href: `/${s.slug}/` }));

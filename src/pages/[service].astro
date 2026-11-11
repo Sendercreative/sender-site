@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import Tile from '../components/Tile.astro';
+import { SERVICES, type Service } from '../data/services';
+import { WORK, CONTACT } from '../data/site';
+import '../styles/pages.css';
+
+export function getStaticPaths() {
+  return SERVICES.map((s) => ({ params: { service: s.slug }, props: { s } }));
+}
+
+const { s } = Astro.props as { s: Service };
+const work = s.work ? WORK[s.work] : [];
+const related = SERVICES.filter((x) => x.slug !== s.slug);
+const site = Astro.site!.href;
+const url = new URL(`/${s.slug}/`, Astro.site).href;
+const workAnchor = { logos: 'branding', videos: 'video', websites: 'websites' } as const;
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: s.title,
+    description: s.description,
+    url,
+    provider: { '@id': `${site}#org` },
+    areaServed: ['Hamilton', 'Haldimand County', 'Norfolk County'].map((name) => ({ '@type': 'AdministrativeArea', name })),
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: s.title,
+      itemListElement: s.includes.map((i) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: i.title, description: i.text } })),
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: s.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: new URL('/services/', site).href },
+      { '@type': 'ListItem', position: 3, name: s.title, item: url },
+    ],
+  },
+];
+---
+<Base title={s.seoTitle} description={s.description} schema={schema} ctaEyebrow={s.short} ctaHeading="Ready to send it?">
+  <article class="pg">
+    <header class="pg-hero pad">
+      <div class="hero-orb" aria-hidden="true"></div>
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span aria-hidden="true">/</span><a href="/services/">Services</a><span aria-hidden="true">/</span><span aria-current="page">{s.short}</span>
+      </nav>
+      <h1 class="rv">{s.title}</h1>
+      <p class="lead rv">{s.intro}</p>
+      <div class="btns rv">
+        <a class="btn dark" href={CONTACT.booking}>Book a visit →</a>
+        {s.work && <a class="btn line" href={`/work/#${workAnchor[s.work]}`}>See the work</a>}
+      </div>
+    </header>
+
+    <section class="sec pad" aria-labelledby="why-h" style="padding-top:0">
+      <div class="sh"><h2 id="why-h" class="rv">Why it matters</h2></div>
+      <ol class="trio">
+        {s.benefits.map((b, i) => (
+          <li class="dots rv">
+            <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="incl" aria-labelledby="inc-h">
+      <div class="pad" style="padding-top:clamp(16px,2vw,24px);padding-bottom:clamp(16px,2vw,24px)">
+        <div class="panel">
+          <p class="eyebrow">Part of your system · {s.layer}</p>
+          <h2 id="inc-h" class="rv">What’s included</h2>
+          <ul class="ilist">
+            {s.includes.map((i) => (
+              <li class="rv"><h3>{i.title}</h3><p>{i.text}</p></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    {work.length > 0 && (
+      <section class="sec wstrip pad" aria-labelledby="work-h">
+        <div class="sh">
+          <h2 id="work-h" class="rv">Recent work</h2>
+          <a class="btn line" href={`/work/#${workAnchor[s.work!]}`}>All work →</a>
+        </div>
+        <div class:list={['wgrid', { two: work.length < 3 }]}>
+          {work.slice(0, 6).map((item) => <Tile item={item} />)}
+        </div>
+      </section>
+    )}
+
+    <section class="sec faq pad" aria-labelledby="faq-h">
+      <div class="sh"><h2 id="faq-h" class="rv">Questions</h2><p class="rv">Something else on your mind? Call <a href={`tel:${CONTACT.phoneHref}`} style="border-bottom:1px solid">{CONTACT.phone}</a>.</p></div>
+      <ul class="qa">
+        {s.faq.map((f, i) => (
+          <li class="dots">
+            <details open={i === 0}>
+              <summary>{f.q}<i aria-hidden="true"></i></summary>
+              <p>{f.a}</p>
+            </details>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="sec rel pad" aria-labelledby="rel-h">
+      <div class="sh"><h2 id="rel-h" class="rv">Works with</h2><p class="rv">Every service is one part of a connected system. <a href="/#system" style="border-bottom:1px solid">See how it fits together</a>.</p></div>
+      <nav class="rlist" aria-label="Other services">
+        {related.map((r) => <a href={`/${r.slug}/`}>{r.title}<span aria-hidden="true">→</span></a>)}
+      </nav>
+    </section>
+  </article>
+</Base>
