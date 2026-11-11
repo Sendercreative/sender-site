@@ -52,6 +52,7 @@ addEventListener('pointermove', (e) => {
 /* ── Hero headline that rewrites itself as you scroll ── */
 const hblk = $('hblk'), lk = $('lk'), ag = $('ag'), lede = $('lede'), rail = $('rail');
 const dots = [...rail.querySelectorAll('a')];
+const vlabs = [...$('vlab').children];
 const htxt = document.querySelector<HTMLElement>('.htxt')!;
 let cur = 0, word = HERO[0].word, ready = false;
 let swapT: ReturnType<typeof setTimeout> | undefined;
@@ -61,7 +62,7 @@ let docked = false, docking = false, dockTok = 0;
 function dockTo(d: boolean) {
   docked = d;
   const tok = ++dockTok;
-  if (reduced) { R.classList.toggle('docked', d); fit(); placeFor(1400); return; }
+  if (reduced || innerWidth <= 760) { R.classList.toggle('docked', d); fit(); placeFor(1400); return; }
   docking = true;
   const els = [hblk, lede];
   els.forEach((e) => { e.classList.remove('hin'); e.classList.add('hout'); });
@@ -149,6 +150,11 @@ function update() {
   lk.style.opacity = (1 - k).toFixed(3);
   setLines(!d ? 0 : idx < 0 ? 1 : idx + 2);
   dots.forEach((a, i) => a.classList.toggle('on', i === idx));
+  vlabs.forEach((s, i) => s.classList.toggle('on', i === idx));
+  // Mobile: the hero text scrolls up and off with the page instead of docking
+  const mob = innerWidth <= 760;
+  hblk.style.translate = mob ? `0 ${-y}px` : '';
+  if (mob) place();
   R.classList.toggle('flyon', !d);
   rail.style.setProperty('--dy', `${-y * 0.5}px`);
 }

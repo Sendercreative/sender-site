@@ -27,7 +27,7 @@ const attrs = y || p.video ? {} : { href };
       <Image src={p.photo} alt={`${p.name} brand`} widths={[360, 720, 1080]} sizes="(max-width:760px) 80vw, 26vw" loading="lazy" decoding="async" />
     </div>
   ) : p.phone ? (
-    <div class="m phone">
+    <div class="m phone" style={`aspect-ratio:${p.phone.width}/${p.phone.height}`}>
       <Image src={p.phone} alt={`${p.name} website on a phone`} widths={[240, 480, 720]} sizes="(max-width:760px) 26vw, 18vw" loading="lazy" decoding="async" />
     </div>
   ) : p.shot ? (
