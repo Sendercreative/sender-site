@@ -4,7 +4,7 @@ import Tile from '../components/Tile.astro';
 import Ph from '../components/Ph.astro';
 import { PROJECTS, projectHref } from '../data/projects';
 import { SERVICES, type Service } from '../data/services';
-import { WORK, CONTACT } from '../data/site';
+import { WORK, VIDEO_LIBRARY, CONTACT } from '../data/site';
 import '../styles/pages.css';
 import '../styles/project.css';
 
@@ -13,7 +13,7 @@ export function getStaticPaths() {
 }
 
 const { s } = Astro.props as { s: Service };
-const work = s.work ? WORK[s.work] : [];
+const work = s.work === 'videos' ? VIDEO_LIBRARY : s.work ? WORK[s.work] : [];
 const related = SERVICES.filter((x) => x.slug !== s.slug);
 const site = Astro.site!.href;
 const url = new URL(`/${s.slug}/`, Astro.site).href;

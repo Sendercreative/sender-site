@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Ph from '../../components/Ph.astro';
 import Tile from '../../components/Tile.astro';
 import { PROJECTS, projectHref } from '../../data/projects';
-import { WORK } from '../../data/site';
+import { VIDEO_LIBRARY } from '../../data/site';
 import '../../styles/pages.css';
 import '../../styles/project.css';
 
@@ -61,10 +61,10 @@ const schema = [
     <section class="sec pad" id="video" aria-labelledby="vid-h" style="background:#fff">
       <div class="sh dots" style="padding-top:clamp(24px,3vw,40px)">
         <h2 id="vid-h" class="rv">Video</h2>
-        <p class="rv">Shot and edited in-house: brand films, reels and motion. <a href="/photo-video/" style="border-bottom:1px solid">More on photo + video →</a></p>
+        <p class="rv">Shot and edited in-house: brand films, explainers and motion. <a href="/photo-video/" style="border-bottom:1px solid">More on photo + video →</a></p>
       </div>
       <div class="wgrid two">
-        {WORK.videos.map((item) => <Tile item={item} />)}
+        {VIDEO_LIBRARY.map((item) => <Tile item={item} />)}
       </div>
     </section>
   </div>

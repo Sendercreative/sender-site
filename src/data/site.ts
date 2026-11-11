@@ -22,7 +22,7 @@ export type WorkItem = {
   /** Inverse logo, used on dark tiles */
   inv?: ImageMetadata;
   /** Self-hosted video (path under /public) */
-  video?: { src: string; poster: string };
+  video?: { src: string; poster?: string };
   /** YouTube URL — rendered as a muted autoplay loop */
   youtube?: string;
   /** Placeholder label until a real image exists */
@@ -36,15 +36,21 @@ export type WorkItem = {
   year?: string;
 };
 
+const GS_EXPLAINER: WorkItem = { name: 'Gutter Sleeve explainer', tag: 'Explainer video', year: '2025', youtube: 'https://www.youtube.com/watch?v=E5VHcj4wQM8' };
+
+/** Work page Video section (and the Photo & Video service page) */
+export const VIDEO_LIBRARY: WorkItem[] = [
+  { name: 'Dicam overview', tag: 'Overview video', video: { src: 'https://cdn.capturestudio.ca/Dicam/Dicam-overview.mp4' } },
+  GS_EXPLAINER,
+];
+
 export const WORK: Record<'logos' | 'videos' | 'websites', WorkItem[]> = {
   logos: PROJECTS.map((p) => ({
     name: p.name, tag: 'Logo + brand', href: projectHref(p),
     img: p.images?.logoLight, inv: p.images?.logoDark, ph: 'Logo',
   })),
-  videos: [
-    { name: 'Sender Reel', tag: 'Edit + Motion', year: '2026', video: { src: '/media/reel.mp4', poster: '/media/reel-poster.jpg' } },
-    { name: 'Gutter Sleeve explainer', tag: 'Explainer video', year: '2025', youtube: 'https://www.youtube.com/watch?v=E5VHcj4wQM8' },
-  ],
+  /** Homepage Video panel */
+  videos: [GS_EXPLAINER],
   websites: PROJECTS.map((p) => ({
     name: p.name, tag: p.status === 'soon' ? 'Website · Soon' : 'Website', href: projectHref(p),
     shot: p.images?.desktop, ph: 'Website screenshot', dark: true,
