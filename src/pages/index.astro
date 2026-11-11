@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Tile from '../components/Tile.astro';
-import { WORK, BOXES, HERO, SERVICES, PAGES, CONTACT } from '../data/site';
+import { WORK, BOXES, HERO, PROCESS, SYSTEM, CHOICES, PAGES, CONTACT } from '../data/site';
 import '../styles/home.css';
 
 const W = WORK;
@@ -95,35 +95,67 @@ const letters = (s: string) => [...s];
       </div>
     </section>
 
-    <section class="sec svc pad" id="services" aria-labelledby="services-h">
+    <section class="sec proc pad" id="process" aria-labelledby="process-h">
+      <p class="eyebrow">Our process</p>
+      <h2 class="rv" id="process-h">Simple on your end.</h2>
+      <ol class="steps">
+        {PROCESS.map((st, i) => (
+          <li class="step rv" style={`--d:${i * 0.08}s`}>
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{st.title}</h3>
+            <p>{st.blurb}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="sec svc pad" id="system" aria-labelledby="system-h">
       <div class="svh">
         <div>
-          <p class="eyebrow" style="margin-bottom:24px;font-size:clamp(14px,1.2vw,18px)">Our Services</p>
-          <h2 class="rv" id="services-h">Everything your<br />marketing needs.</h2>
+          <p class="eyebrow" style="margin-bottom:24px;font-size:clamp(14px,1.2vw,18px)">What we build</p>
+          <h2 class="rv" id="system-h">One system.<br />Every piece connected.</h2>
         </div>
-        <p class="rv">One team for the whole job, from the logo on your truck to the ad that fills your calendar. Pick one, or let us run all of it.</p>
+        <p class="rv">Your brand, your website, how people find you and how you follow up, built to work together instead of bought one piece at a time.</p>
       </div>
       <div class="slist" id="slist">
-        {SERVICES.map((s) => (
+        {SYSTEM.map((s) => (
           <div class="si rv" tabindex="0" role="button" aria-expanded="false">
             <div class="sl">
               <h3>{s.title}</h3>
               <div class="more2"><div class="tags">{s.tags.map((t) => <span>{t}</span>)}</div></div>
             </div>
             <div class="sp">
-              <div class="img"><div class="ph">{s.title} example</div></div>
-              <div class="txt"><p>{s.blurb}</p><a href="#contact" tabindex="-1">Talk to us →</a></div>
+              <div class="img"><div class="ph">{s.title}</div></div>
+              <div class="txt"><p>{s.blurb}</p><a href={CONTACT.booking} tabindex="-1">Book a visit →</a></div>
             </div>
           </div>
         ))}
       </div>
-      <div class="sfoot"><p>Not sure where to start? Book a free consultation.</p><a href="#contact">Book a call →</a></div>
+    </section>
+
+    <section class="sec pick pad" id="handoff" aria-labelledby="pick-h">
+      <p class="eyebrow">Once it's built</p>
+      <h2 class="rv" id="pick-h">Your system, your call.</h2>
+      <div class="choices">
+        {CHOICES.map((c, i) => (
+          <article class:list={['choice', 'rv', { dark: i === 1 }]} style={`--d:${i * 0.1}s`}>
+            <p class="k">{c.kicker}</p>
+            <h3>{c.title}</h3>
+            <p class="b">{c.blurb}</p>
+            <p class="n">{c.note}</p>
+          </article>
+        ))}
+      </div>
+      <div class="sfoot"><p>Just need social, or a website? Start there. The rest can come later.</p><a href={CONTACT.booking}>Book a visit →</a></div>
     </section>
 
     <section class="end pad" id="contact" aria-labelledby="contact-h">
-      <p class="eyebrow" style="margin-bottom:28px">Start a project</p>
-      <h2 class="rv" id="contact-h">Let's get in touch.</h2>
-      <a class="mail" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+      <p class="eyebrow" style="margin-bottom:28px">Start here</p>
+      <h2 class="rv" id="contact-h">Ready to send it?</h2>
+      <div class="cta-row">
+        <a class="btn-light" href={CONTACT.booking}>Book a visit →</a>
+        <a class="mail" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+      </div>
       <div class="big" role="img" aria-label="Sender"></div>
       <footer class="foot" style="padding-left:0;padding-right:0">
         <span>© {new Date().getFullYear()} Sender Creative</span>
