@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import type { WorkItem } from '../data/site';
+
+interface Props { item: WorkItem }
+const { item: p } = Astro.props;
+
+const ytId = (u: string) => (u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/) || [])[1] || u;
+const y = p.youtube ? ytId(p.youtube) : null;
+const logo = p.img ?? p.inv;
+---
+<a href={y ? `https://youtu.be/${y}` : '#'} class="tile" {...(y ? { target: '_blank', rel: 'noopener' } : {})}>
+  {y ? (
+    <div class="m wide">
+      <iframe
+        src={`https://www.youtube-nocookie.com/embed/${y}?autoplay=1&mute=1&loop=1&playlist=${y}&controls=0&playsinline=1&rel=0&modestbranding=1`}
+        title={p.name} allow="autoplay; encrypted-media" loading="lazy"></iframe>
+    </div>
+  ) : p.video ? (
+    <div class="m wide">
+      <video src={p.video.src} poster={p.video.poster} autoplay muted loop playsinline preload="metadata" aria-label={p.name}></video>
+    </div>
+  ) : p.ph ? (
+    <div class="m web"><div class="ph">{p.ph}</div></div>
+  ) : logo ? (
+    <div class:list={['m', { dk: !p.img }]}>
+      {logo.format === 'svg'
+        ? <img src={logo.src} alt={p.name} width={logo.width} height={logo.height} loading="lazy" decoding="async" />
+        : <Image src={logo} alt={p.name} widths={[240, 480]} sizes="(max-width:760px) 60vw, 240px" loading="lazy" decoding="async" />}
+    </div>
+  ) : null}
+  <div class="cap"><span>{p.name}</span><span>{p.tag} · {p.year}</span></div>
+</a>
