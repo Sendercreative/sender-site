@@ -21,6 +21,12 @@ export type Project = {
   /** One line under the title, and on cards */
   summary: string;
   story: { challenge: string; built: string; result: string };
+  /** Optional pull quote shown between the story and the brand */
+  quote?: { text: string; by: string };
+  /** Optional link to a longer write-up */
+  readMore?: { href: string; label: string };
+  /** What's still running after launch (shows as "Ongoing") */
+  ongoing?: string[];
   images?: {
     hero?: ImageMetadata;      // 2400×1350 (16:9)
     logoLight?: ImageMetadata; // logo on white, SVG or PNG
@@ -42,10 +48,20 @@ export const PROJECTS: Project[] = [
     slug: '6-days',
     name: '6 Days',
     url: 'https://6days.ca/',
-    industry: 'Business directory',
-    services: ['Logo', 'Brand', 'Website'],
-    summary: 'A values-aligned directory for Ontario businesses, branded and built from the ground up.',
-    story: TBD,
+    industry: 'Christian business directory',
+    services: ['Naming', 'Logo', 'Brand', 'Website'],
+    ongoing: ['Social media', 'Email updates', 'Community growth'],
+    summary: 'A home for Christian businesses in Canada: a directory, a job board and a community. Named, branded, built and run in-house.',
+    story: {
+      challenge: 'Our Christian community had no single place to find its businesses or their job openings. Ben felt that gap first-hand while job hunting, then spent time talking with business owners to confirm they felt it too.',
+      built: 'Everything. The name, the message, the brand and how the directory is organized, then the design and build of the site itself. One clear idea, carried through every piece.',
+      result: 'A growing directory of Christian businesses across Canada, now running on every social platform with regular email updates. Next up: matching people with mentors, and business owners with roundtable groups.',
+    },
+    quote: {
+      text: 'How many lives have we positively impacted?',
+      by: 'The one metric of success for 6 Days · Ben Nobels, founder',
+    },
+    readMore: { href: 'https://6days.ca/faith-and-work', label: 'Read the full story: Why build 6 Days?' },
   },
   {
     slug: 'venture-gutter-services',

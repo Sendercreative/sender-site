@@ -54,6 +54,7 @@ const schema = [
       <dl class="meta rv">
         <div><dt>Services</dt><dd>{p.services.join(' · ')}</dd></div>
         <div><dt>Industry</dt><dd>{p.industry}</dd></div>
+        {p.ongoing && <div><dt>Ongoing</dt><dd>{p.ongoing.join(' · ')}</dd></div>}
         {p.year && <div><dt>Year</dt><dd>{p.year}</dd></div>}
         <div><dt>Website</dt><dd>{live ? <a href={p.url} target="_blank" rel="noopener">{host} ↗</a> : p.status === 'soon' ? `${host} · launching soon` : '—'}</dd></div>
       </dl>
@@ -70,6 +71,17 @@ const schema = [
         <div class="dots rv"><p class="k">What we built</p><p>{p.story.built}</p></div>
         <div class="dots rv"><p class="k">The result</p><p>{p.story.result}</p></div>
       </div>
+      {(p.quote || p.readMore) && (
+        <div class="pull">
+          {p.quote && (
+            <blockquote class="rv">
+              <p>“{p.quote.text}”</p>
+              <footer>{p.quote.by}</footer>
+            </blockquote>
+          )}
+          {p.readMore && <a class="btn line rv" href={p.readMore.href} target="_blank" rel="noopener">{p.readMore.label} ↗</a>}
+        </div>
+      )}
     </section>
 
     <section class="sec brand pad" aria-labelledby="brand-h">
