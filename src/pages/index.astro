@@ -9,6 +9,11 @@ const W = WORK;
 const deck = [W.logos[0], W.websites[1], W.logos[3], W.websites[5], W.logos[2], W.websites[4], W.logos[4]].filter(Boolean);
 const letters = (s: string) => [...s];
 const workHref = { logos: '/work/#branding', videos: '/work/#video', websites: '/work/#websites' } as const;
+/** Homepage Websites panel: only these, in this order. */
+const homeSites = ['void-cavitation', '6-days', 'jb-controls']
+  .map((slug) => W.websites.find((w) => w.href === `/work/${slug}/`))
+  .filter(Boolean);
+const panel = { ...W, websites: homeSites };
 ---
 <Base page="home">
     <section class="stage" id="stage" aria-label="Introduction and work">
@@ -58,7 +63,7 @@ const workHref = { logos: '/work/#branding', videos: '/work/#video', websites: '
           <article class="box" id={`b-${b.key}`}>
             <div class="bxh"><div class="l"><h2>{b.label}</h2></div></div>
             <div class={b.key === 'logos' ? 'lgrid' : 'vlist'}>
-              {W[b.key].map((item) => <Tile item={item} web={b.key === 'websites'} />)}
+              {panel[b.key].map((item) => <Tile item={item} web={b.key === 'websites'} />)}
             </div>
             <a href={workHref[b.key]} class="more">All {b.label.toLowerCase()} →</a>
           </article>
