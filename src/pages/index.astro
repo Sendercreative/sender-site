@@ -1,7 +1,11 @@
 ---
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Base from '../layouts/Base.astro';
 import Tile from '../components/Tile.astro';
+import voidBrand from '../assets/home/void-brand.jpg';
+import sixDaysBrand from '../assets/home/6days-brand.jpg';
+import jbBrand from '../assets/home/jb-brand.jpg';
 import { WORK, BOXES, HERO, PROCESS, SYSTEM, CHOICES, CONTACT } from '../data/site';
 import '../styles/home.css';
 
@@ -16,7 +20,15 @@ const homeSites = ['void-cavitation', '6-days', 'jb-controls']
   .map((w) => ({ ...w, shot: undefined, phone: w.mshot }));
 /** Homepage Branding panel: drop these. */
 const hideLogos = ['ontario-window-door-products', 'venture-gutter-services'].map((slug) => `/work/${slug}/`);
-const homeLogos = W.logos.filter((l) => !hideLogos.includes(l.href ?? ''));
+/** Homepage Branding panel: brand photos in place of plain logos. */
+const brandPhoto: Record<string, ImageMetadata> = {
+  '/work/void-cavitation/': voidBrand,
+  '/work/6-days/': sixDaysBrand,
+  '/work/jb-controls/': jbBrand,
+};
+const homeLogos = W.logos
+  .filter((l) => !hideLogos.includes(l.href ?? ''))
+  .map((l) => (brandPhoto[l.href ?? ''] ? { ...l, photo: brandPhoto[l.href ?? ''] } : l));
 const panel = { ...W, logos: homeLogos, websites: homeSites };
 ---
 <Base page="home">

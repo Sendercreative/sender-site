@@ -184,3 +184,5 @@
 .tile .m.phone img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:top}
 .pgrid .tile .cap{flex-direction:column;gap:4px}
 @media(max-width:760px){.pgrid{gap:10px}.pgrid .tile .cap{font-size:9px;letter-spacing:.1em}}
+.tile .m.photo{padding:0}
+.tile .m.photo img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:center}
