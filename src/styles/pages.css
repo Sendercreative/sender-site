@@ -56,7 +56,7 @@
 .tile .m.dk{background:#0a0a0a}
 .tile .m.wide{aspect-ratio:16/9;padding:0}
 .tile .m.web{aspect-ratio:16/10;padding:0}
-.tile .m:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%) -150% 0/200% 100% no-repeat;mix-blend-mode:overlay;transition:background-position 1s var(--ease)}
+.tile .m:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%) -150% 0/200% 100% no-repeat;mix-blend-mode:overlay;pointer-events:none;transition:background-position 1s var(--ease)}
 .tile:hover .m:after{background-position:150% 0}
 .tile img{max-height:100%;width:auto;height:auto;object-fit:contain;transition:transform 1s var(--ease)}.tile:hover img{transform:scale(1.06)}
 .tile video,.tile iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}

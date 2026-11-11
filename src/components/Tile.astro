@@ -12,11 +12,17 @@ const y = p.youtube ? ytId(p.youtube) : null;
 const logo = p.img ?? p.inv;
 const href = y ? `https://youtu.be/${y}` : p.href ?? '#';
 const meta = [p.tag, p.year].filter(Boolean).join(' · ');
-const Tag = y || p.video ? 'div' : 'a';
-const attrs = y || p.video ? {} : { href };
+const Tag = y || p.video || p.instagram ? 'div' : 'a';
+const attrs = y || p.video || p.instagram ? {} : { href };
 ---
 <Tag class="tile" {...attrs}>
-  {y ? (
+  {p.instagram ? (
+    <div class="m ig">
+      <blockquote class="instagram-media" data-instgrm-permalink={`${p.instagram}?utm_source=ig_embed`} data-instgrm-version="14">
+        <a href={p.instagram} target="_blank" rel="noopener">Watch {p.name} on Instagram</a>
+      </blockquote>
+    </div>
+  ) : y ? (
     <YouTube url={p.youtube!} title={p.name} class="m wide" />
   ) : p.video ? (
     <div class="m wide">
@@ -48,3 +54,20 @@ const attrs = y || p.video ? {} : { href };
   )}
   <div class="cap"><span>{p.name}</span><span>{meta}</span></div>
 </Tag>
+
+<script>
+  // Load Instagram's embed script only once an embed is about to scroll into view.
+  const igs = document.querySelectorAll('.instagram-media');
+  if (igs.length) {
+    const load = () => {
+      const w = window as unknown as { instgrm?: { Embeds: { process(): void } } };
+      if (w.instgrm) return w.instgrm.Embeds.process();
+      if (document.getElementById('ig-embed')) return;
+      const s = document.createElement('script');
+      s.id = 'ig-embed'; s.async = true; s.src = 'https://www.instagram.com/embed.js';
+      document.body.appendChild(s);
+    };
+    const o = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { load(); o.disconnect(); } }, { rootMargin: '600px 0px' });
+    igs.forEach((el) => o.observe(el));
+  }
+</script>

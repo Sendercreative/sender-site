@@ -21,11 +21,18 @@ const io = new IntersectionObserver(
 document.querySelectorAll('.rv').forEach((el) => io.observe(el));
 
 /* ── Below-the-fold videos: only download and play while on screen ── */
+const userPaused = new WeakSet<HTMLVideoElement>();
+let autoPausing = false;
 const vio = new IntersectionObserver((es) => es.forEach((e) => {
   const v = e.target as HTMLVideoElement;
-  if (e.isIntersecting) { if (!reduced) v.play().catch(() => {}); } else v.pause();
+  if (e.isIntersecting) { if (!reduced && !userPaused.has(v)) v.play().catch(() => {}); }
+  else { autoPausing = true; v.pause(); autoPausing = false; }
 }), { rootMargin: '200px 0px' });
-document.querySelectorAll<HTMLVideoElement>('video.lazyv').forEach((v) => vio.observe(v));
+document.querySelectorAll<HTMLVideoElement>('video.lazyv').forEach((v) => {
+  vio.observe(v);
+  v.addEventListener('pause', () => { if (!autoPausing) userPaused.add(v); });
+  v.addEventListener('play', () => userPaused.delete(v));
+});
 
 /* ── Full-screen menu ── */
 const ml = $('mlist'), mp = $('mprev'), ov = $('ov'), mb = $<HTMLButtonElement>('mbtn');

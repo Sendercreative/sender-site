@@ -23,6 +23,8 @@ export type WorkItem = {
   inv?: ImageMetadata;
   /** Self-hosted video (path under /public) */
   video?: { src: string; poster?: string };
+  /** Instagram post/reel permalink — official embed, loaded when scrolled near */
+  instagram?: string;
   /** YouTube URL — rendered as a muted autoplay loop */
   youtube?: string;
   /** Placeholder label until a real image exists */
@@ -44,6 +46,7 @@ const GS_EXPLAINER: WorkItem = { name: 'Gutter Sleeve explainer', tag: 'Explaine
 export const VIDEO_LIBRARY: WorkItem[] = [
   { name: 'Dicam overview', tag: 'Overview video', video: { src: 'https://cdn.capturestudio.ca/Dicam/Dicam-overview.mp4' } },
   GS_EXPLAINER,
+  { name: 'Round 2 Tires', tag: 'Social reel', instagram: 'https://www.instagram.com/reel/DdSMpJ7R2b5/' },
 ];
 
 export const WORK: Record<'logos' | 'videos' | 'websites', WorkItem[]> = {
