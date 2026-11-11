@@ -8,7 +8,7 @@ const { url, title, class: cls } = Astro.props;
 const id = (url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/) || [])[1] ?? url;
 ---
 <div class:list={['yt', cls]} data-yt={id} data-title={title}>
-  <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" width="480" height="360" />
+  <img src={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`} alt="" loading="lazy" decoding="async" width="1280" height="720" onerror={`this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg'`} />
   <button type="button" class="yt-play" aria-label={`Play video: ${title}`}>
     <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor" /></svg>
   </button>
