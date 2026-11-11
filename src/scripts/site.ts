@@ -59,18 +59,20 @@ function toggleMenu(o: boolean) {
 mb.addEventListener('click', () => toggleMenu(!R.classList.contains('mopen')));
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && R.classList.contains('mopen')) { toggleMenu(false); mb.focus(); } });
 
-/* ── Logo mark spins with scroll velocity ── */
+/* ── Logo mark spins with scroll velocity (only animates while moving) ── */
 {
   const logo = $('logo');
-  let lastY = scrollY, rot = 0, vel = 0;
-  (function spin() {
+  let lastY = scrollY, rot = 0, vel = 0, running = false;
+  const spin = () => {
     const y = scrollY;
     vel += (y - lastY - vel) * 0.2;
     lastY = y;
     rot += vel * 0.35;
-    logo.style.setProperty('--r', `${rot}deg`);
-    requestAnimationFrame(spin);
-  })();
+    logo.style.setProperty('--r', `${rot.toFixed(2)}deg`);
+    if (Math.abs(vel) > 0.05) requestAnimationFrame(spin);
+    else { running = false; vel = 0; }
+  };
+  addEventListener('scroll', () => { if (!running) { running = true; lastY = scrollY - 1; requestAnimationFrame(spin); } }, { passive: true });
 }
 
 /* ── Smoothed wheel scrolling + in-page anchor glide ── */
@@ -78,7 +80,7 @@ if (!reduced) {
   let tgt = scrollY, pos = scrollY, run = false;
   const max = () => document.documentElement.scrollHeight - innerHeight;
   const step = () => {
-    pos += (tgt - pos) * 0.085;
+    pos += (tgt - pos) * 0.16;
     if (Math.abs(tgt - pos) < 0.4) { pos = tgt; run = false; }
     scrollTo(0, pos);
     if (run) requestAnimationFrame(step);

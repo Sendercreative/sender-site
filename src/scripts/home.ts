@@ -105,14 +105,20 @@ function setLines(i: number) {
   swapT = setTimeout(() => {
     ag.innerHTML = HERO[i].lines.map((t) => `<span class="pop" aria-hidden="true"><span>${t}</span></span>`).join('');
     fit();
+    placeFor(1400);
     requestAnimationFrame(() => requestAnimationFrame(() => [...ag.children].forEach((c) => c.classList.add('on'))));
   }, 480);
 }
 
+let scrollQueued = false;
 function onScroll() {
-  if (!ready) return;
+  if (!ready || scrollQueued) return;
+  scrollQueued = true;
+  requestAnimationFrame(() => { scrollQueued = false; update(); });
+}
+function update() {
   const y = scrollY, d = y > 30;
-  if (d !== R.classList.contains('docked')) { R.classList.toggle('docked', d); fit(); }
+  if (d !== R.classList.contains('docked')) { R.classList.toggle('docked', d); fit(); placeFor(1400); }
   let idx = -1;
   boxes.forEach((b, i) => { if (b.getBoundingClientRect().top < innerHeight * 0.55) idx = i; });
   let k = 0;
@@ -128,12 +134,24 @@ function onScroll() {
   rail.style.setProperty('--dy', `${-y * 0.5}px`);
 }
 
-(function place() {
+/* Keep the lede tucked under the headline. Runs only while the headline is moving. */
+let placeUntil = 0, placing = false;
+function place() {
   const r = hblk.getBoundingClientRect();
   const o = lede.offsetParent ? (lede.offsetParent as HTMLElement).getBoundingClientRect().top : 0;
   lede.style.top = `${r.bottom - o + Math.max(16, innerHeight * 0.03)}px`;
-  requestAnimationFrame(place);
-})();
+  if (performance.now() < placeUntil) requestAnimationFrame(place); else placing = false;
+}
+function placeFor(ms: number) {
+  placeUntil = Math.max(placeUntil, performance.now() + ms);
+  if (!placing) { placing = true; requestAnimationFrame(place); }
+}
+placeFor(6500);
+addEventListener('resize', () => placeFor(300));
+
+/* Pause the hero's background animation once it has scrolled away */
+new IntersectionObserver(([e]) => R.classList.toggle('hero-off', !e.isIntersecting)).observe($('stage'));
+
 addEventListener('scroll', onScroll, { passive: true });
 addEventListener('resize', fit);
 
@@ -151,5 +169,6 @@ document.fonts.ready.then(() => {
   setTimeout(() => R.classList.add('s0'), T[0]);
   setTimeout(() => { lk.style.transition = 'transform 1.5s cubic-bezier(.7,0,.15,1)'; lk.style.transform = 'none'; R.classList.add('s1'); }, T[1]);
   setTimeout(() => [...ag.children].forEach((c) => c.classList.add('on')), T[2]);
-  setTimeout(() => { R.classList.add('s3'); ready = true; onScroll(); }, T[3]);
+  setTimeout(() => { R.classList.add('s3'); ready = true; update(); }, T[3]);
+  setTimeout(() => R.classList.add('hero-rest'), reduced ? 0 : 10000);
 });
