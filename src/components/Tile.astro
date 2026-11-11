@@ -18,7 +18,7 @@ const logo = p.img ?? p.inv;
     </div>
   ) : p.video ? (
     <div class="m wide">
-      <video src={p.video.src} poster={p.video.poster} autoplay muted loop playsinline preload="metadata" aria-label={p.name}></video>
+      <video class="lazyv" src={p.video.src} poster={p.video.poster} muted loop playsinline preload="none" aria-label={p.name}></video>
     </div>
   ) : p.ph ? (
     <div class="m web"><div class="ph">{p.ph}</div></div>

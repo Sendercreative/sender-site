@@ -30,6 +30,13 @@ const bio = new IntersectionObserver(
 );
 boxes.forEach((b) => bio.observe(b));
 
+/* ── Below-the-fold videos: only download and play while on screen ── */
+const vio = new IntersectionObserver((es) => es.forEach((e) => {
+  const v = e.target as HTMLVideoElement;
+  if (e.isIntersecting) { if (!reduced) v.play().catch(() => {}); } else v.pause();
+}), { rootMargin: '200px 0px' });
+document.querySelectorAll<HTMLVideoElement>('video.lazyv').forEach((v) => vio.observe(v));
+
 /* ── Floating card deck beside the hero ── */
 const fly = document.querySelector<HTMLElement>('.fly')!;
 const FC = [...fly.querySelectorAll<HTMLElement>('.fc')];
