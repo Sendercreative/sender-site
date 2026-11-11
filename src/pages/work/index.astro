@@ -45,7 +45,12 @@ const schema = [
       <div class="pgrid">
         {PROJECTS.map((p) => (
           <a class="pcard rv" href={projectHref(p)}>
-            <Ph img={p.images?.hero} label={`${p.name} · cover`} size="2400 × 1350" ratio="16/10" dark alt="" sizes="(max-width:760px) 100vw, 50vw" />
+            {(() => {
+              const im = p.images ?? {};
+              const logo = !im.hero && (im.logoDark ?? im.logoLight);
+              const dark = !im.hero ? !!im.logoDark || !im.logoLight : true;
+              return <Ph img={im.hero ?? (logo || undefined)} label={`${p.name} · cover`} size="2400 × 1350" ratio="16/10" dark={dark} fit={logo ? 'contain' : 'cover'} inset={logo ? '20%' : undefined} alt="" sizes="(max-width:760px) 100vw, 50vw" />;
+            })()}
             <div class="t"><h3>{p.name}</h3><span class="tag">{p.services.join(' + ')}{p.status === 'soon' ? ' · Soon' : ''}</span></div>
             <p>{p.industry}</p>
           </a>

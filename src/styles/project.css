@@ -14,7 +14,6 @@
 
 .brand{background:#f2f2f2}
 .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.logo-slot.filled img{inset:18%;width:64%;height:64%}
 
 .web{background:#fff}
 .devices{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1fr);gap:clamp(20px,3vw,48px);align-items:end}

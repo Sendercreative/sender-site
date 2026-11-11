@@ -8,6 +8,15 @@
  *   images: { hero: voidHero }
  */
 import type { ImageMetadata } from 'astro';
+import sixLight from '../assets/projects/6-days/logo-light.svg';
+import sixDark from '../assets/projects/6-days/logo-dark.svg';
+import ventureLight from '../assets/projects/venture-gutter-services/logo-light.png';
+import ventureDark from '../assets/projects/venture-gutter-services/logo-dark.png';
+import gsLight from '../assets/projects/gutter-sleeve/logo-light.png';
+import gsDark from '../assets/projects/gutter-sleeve/logo-dark.png';
+import jbLight from '../assets/projects/jb-controls/logo-light.png';
+import voidLight from '../assets/projects/void-cavitation/logo-light.svg';
+import voidDark from '../assets/projects/void-cavitation/logo-dark.svg';
 
 export type Project = {
   slug: string;
@@ -48,10 +57,12 @@ export const PROJECTS: Project[] = [
     slug: '6-days',
     name: '6 Days',
     url: 'https://6days.ca/',
+    year: 'Built 2025 · launched 2026',
     industry: 'Christian business directory',
     services: ['Naming', 'Logo', 'Brand', 'Website'],
     ongoing: ['Social media', 'Email updates', 'Community growth'],
     summary: 'A home for Christian businesses in Canada: a directory, a job board and a community. Named, branded, built and run in-house.',
+    images: { logoLight: sixLight, logoDark: sixDark },
     story: {
       challenge: 'Our Christian community had no single place to find its businesses or their job openings. Ben felt that gap first-hand while job hunting, then spent time talking with business owners to confirm they felt it too.',
       built: 'Everything. The name, the message, the brand and how the directory is organized, then the design and build of the site itself. One clear idea, carried through every piece.',
@@ -70,6 +81,7 @@ export const PROJECTS: Project[] = [
     industry: 'Gutters & exteriors',
     services: ['Logo', 'Brand', 'Website'],
     summary: '[One-line summary of the Venture project.]',
+    images: { logoLight: ventureLight, logoDark: ventureDark },
     story: TBD,
   },
   {
@@ -79,6 +91,7 @@ export const PROJECTS: Project[] = [
     industry: 'Gutter repair product',
     services: ['Logo', 'Brand', 'Website'],
     summary: '[One-line summary of the Gutter Sleeve project.]',
+    images: { logoLight: gsLight, logoDark: gsDark },
     story: TBD,
   },
   {
@@ -88,6 +101,7 @@ export const PROJECTS: Project[] = [
     industry: 'Controls & automation',
     services: ['Logo', 'Brand', 'Website'],
     summary: '[One-line summary of the JB Controls project.]',
+    images: { logoLight: jbLight },
     story: TBD,
   },
   {
@@ -107,6 +121,7 @@ export const PROJECTS: Project[] = [
     industry: 'Industrial technology',
     services: ['Logo', 'Brand', 'Website'],
     summary: '[One-line summary of the Void Cavitation launch.]',
+    images: { logoLight: voidLight, logoDark: voidDark },
     story: TBD,
   },
 ];

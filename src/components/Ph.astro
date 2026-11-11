@@ -16,14 +16,17 @@ interface Props {
   sizes?: string;
   class?: string;
   fit?: 'cover' | 'contain';
+  /** Inner margin around the image, e.g. '22%' for logos */
+  inset?: string;
 }
-const { img, label, size, ratio = '16/9', dark = false, alt = '', sizes = '100vw', class: cls, fit = 'cover' } = Astro.props;
+const { img, label, size, ratio = '16/9', dark = false, alt = '', sizes = '100vw', class: cls, fit = 'cover', inset } = Astro.props;
+const pos = inset ? `inset:${inset};width:calc(100% - 2*${inset});height:calc(100% - 2*${inset});` : '';
 ---
 <div class:list={['slot', cls, { dark, filled: !!img }]} style={`aspect-ratio:${ratio}`}>
   {img ? (
     img.format === 'svg'
-      ? <img src={img.src} alt={alt} width={img.width} height={img.height} loading="lazy" decoding="async" style={`object-fit:${fit}`} />
-      : <Image src={img} alt={alt} widths={[480, 960, 1600, 2400].filter((w) => w <= img.width)} sizes={sizes} loading="lazy" decoding="async" style={`object-fit:${fit}`} />
+      ? <img src={img.src} alt={alt} width={img.width} height={img.height} loading="lazy" decoding="async" style={`object-fit:${fit};${pos}`} />
+      : <Image src={img} alt={alt} widths={[...new Set([480, 960, 1600, 2400].filter((w) => w < img.width).concat(Math.min(img.width, 2400)))]} sizes={sizes} loading="lazy" decoding="async" style={`object-fit:${fit};${pos}`} />
   ) : (
     <div class="slot-ph" aria-hidden="true">
       <span class="slot-l">{label}</span>
