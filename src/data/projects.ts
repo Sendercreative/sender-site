@@ -40,6 +40,10 @@ export type Project = {
   /** One line under the title, and on cards */
   summary: string;
   story: { challenge: string; built: string; result: string };
+  /** What the logo means — shown beside the light/dark logos */
+  mark?: string;
+  /** What the brand package included */
+  delivered?: string[];
   /** Optional pull quote shown between the story and the brand */
   quote?: { text: string; by: string };
   /** Optional link to a longer write-up */
@@ -54,12 +58,6 @@ export type Project = {
     mobile?: ImageMetadata;    // phone screenshot, bars cropped (~1080×1955)
     gallery?: ImageMetadata[]; // any number
   };
-};
-
-const TBD = {
-  challenge: '[Challenge: where the client was before, and what they needed.]',
-  built: '[What we built: the logo, the site and anything else in the system.]',
-  result: '[Result: what changed. Calls, quotes, launch, feedback.]',
 };
 
 const LIST: Project[] = [
@@ -87,47 +85,82 @@ const LIST: Project[] = [
     slug: 'venture-gutter-services',
     name: 'Venture Gutter Services',
     url: 'https://venturegutters.ca/',
+    year: '2026',
     industry: 'Gutters & exteriors',
-    services: ['Logo', 'Brand', 'Website'],
-    summary: '[One-line summary of the Venture project.]',
-    story: TBD,
+    services: ['Brand', 'Logo', 'Website', 'Instant estimate'],
+    summary: 'A new gutter company with a name, and a love of the outdoors, to build on. We turned both into a brand with a story and a site that prices the job on the spot.',
+    story: {
+      challenge: 'The owner had just gone out on his own and was still working through ideas for a name. Once Venture was settled, he needed everything else: a brand, a website and a way to be found.',
+      built: 'The full brand, from logo to layouts, plus a website with a simple calculator so homeowners can get a ballpark price without waiting on a call. The SEO groundwork went in from day one.',
+      result: 'A one-person start-up that looks established from the first quote, with the complete logo suite and brand files in hand.',
+    },
+    mark: 'Venture comes from the owner’s love of the outdoors: hiking, camping, paddling. Look at the mark one way and it’s a roof peak at sunrise with water running down the gutter. Look again and it’s a mountain at dawn above a flowing river. A shield wraps around both for protection, and doubles as the V.',
+    delivered: ['Logo suite, horizontal + stacked', 'Brand fonts', 'Layouts', 'Full file package'],
   },
   {
     slug: 'gutter-sleeve',
     name: 'Gutter Sleeve',
     url: 'https://guttersleeve.ca/',
-    industry: 'Gutter repair product',
-    services: ['Logo', 'Brand', 'Website'],
-    summary: '[One-line summary of the Gutter Sleeve project.]',
-    story: TBD,
+    year: '2025',
+    industry: 'Gutter repair product · Dunnville, ON',
+    services: ['Brand', 'Logo', 'Website', 'Packaging', 'Explainer video'],
+    summary: 'A new product, designed and made in Dunnville, Ontario. We branded it, packaged it, explained it on video and built the site to sell it.',
+    story: {
+      challenge: 'The team invented a flexible rubber sleeve that seals leaking gutter seams. They had the product. They needed a brand that would make sense to a tradesperson in a second, on a shelf or a screen.',
+      built: 'The brand and logo, the packaging, an explainer video, and a website to promote the product, built ready to take orders directly when they are.',
+      result: 'Now building a client base and testing in retailers, with direct-to-consumer sales coming to the site next.',
+    },
+    mark: 'A stylized G and S that looks like the product itself. Strong trade oranges and stark, simple imagery mean people know what it’s for before they read a word.',
+    delivered: ['Logo suite', 'Brand fonts', 'Packaging', 'Explainer video', 'Full file package'],
   },
   {
     slug: 'jb-controls',
     name: 'JB Controls',
     url: 'https://jbcontrols.ca/',
-    industry: 'Controls & automation',
-    services: ['Logo', 'Brand', 'Website'],
-    summary: '[One-line summary of the JB Controls project.]',
-    story: TBD,
+    industry: 'Greenhouse control systems',
+    services: ['Brand refresh', 'Logo', 'Website'],
+    summary: 'New ownership, a new look. A refreshed brand and website for a company that builds and installs control systems for greenhouses.',
+    story: {
+      challenge: 'JB Controls has more than 30 years in controls and electrical work. When ownership changed, the new owners wanted a brand and a website that matched where the company is going.',
+      built: 'A refreshed logo and brand, and a new website that puts their experience and services front and centre.',
+      result: 'A modern identity for the next chapter, carried through a new website built around their experience.',
+    },
+    mark: 'The J and B grow out of a single dot. It reads as a seed for the greenhouse side of the business, or a button for the controls side.',
+    delivered: ['Logo suite, horizontal + stacked', 'Brand fonts', 'Layouts', 'Full file package'],
   },
   {
     slug: 'ontario-window-door-products',
     name: 'Ontario Window & Door Products',
     url: 'https://ontwindowdoorproducts.com/',
+    year: '2025',
     industry: 'Windows & doors',
-    services: ['Logo', 'Brand', 'Website'],
-    summary: '[One-line summary of the OWDP project.]',
-    story: TBD,
+    services: ['Brand', 'Logo', 'Website', 'Project calculator'],
+    summary: '“We make windows and doors easy.” A launch brand and website built around one promise, with a calculator that prices a project instantly.',
+    story: {
+      challenge: 'A new company launching alongside several sister companies. It needed its own logo and website, and still had to sit naturally next to the family it belongs to.',
+      built: 'The logo, the messaging and the website, all built around “we make windows and doors easy.” The site has several custom forms, including a project calculator that gives people a price on the spot.',
+      result: 'Launched with a brand that fits the family and a site that does what the slogan promises.',
+    },
+    mark: 'A stylized O with a door hidden inside it.',
+    delivered: ['Logo suite', 'Brand fonts', 'Layouts', 'Full file package'],
   },
   {
     slug: 'void-cavitation',
     name: 'Void Cavitation',
     url: 'https://voidcavitation.com/',
     status: 'soon',
-    industry: 'Industrial technology',
-    services: ['Logo', 'Brand', 'Website'],
-    summary: '[One-line summary of the Void Cavitation launch.]',
-    story: TBD,
+    year: '2026',
+    industry: 'Hydrodynamic cavitation',
+    services: ['Brand', 'Logo', 'Website', 'Sales materials', 'Launch plan'],
+    ongoing: ['Launch'],
+    summary: 'A start-up bringing hydrodynamic cavitation to industry. They needed the whole package, fast: brand, website, sales materials and a plan to launch it all.',
+    story: {
+      challenge: 'Void is bringing a futuristic technology to market and needed to look the part from day one. The brand had to come together quickly, and everything else had to be built from the ground up.',
+      built: 'The brand and logo, a brand-new website, presentations, sales documents and a launch plan. The full gamut, still rolling out.',
+      result: 'A brand that’s instantly recognizable and scales from an embroidered jacket to a van wrap. The launch is underway now.',
+    },
+    mark: 'Built to look like a high-tech company. The O is carved from negative space, with a spinning icon at its centre that stands for the technology itself. It holds up at any size.',
+    delivered: ['Logo suite + icon', 'Brand fonts', 'Layouts', 'Presentations', 'Sales documents', 'Full file package'],
   },
 ];
 
