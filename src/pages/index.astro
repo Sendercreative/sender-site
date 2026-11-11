@@ -56,7 +56,7 @@ const letters = (s: string) => [...s];
           </div>
         </div>
         <p class="lede" id="lede"><b style="font-weight:400">We'll help you <span>send</span> the right message, in all the right places.</b></p>
-        <div class="sub pad" aria-hidden="true"><span>Sender Creative · {CONTACT.location}</span><span>Scroll ↓</span></div>
+        <div class="sub pad"><span>Marketing for trades · {CONTACT.areas}</span><span aria-hidden="true">Scroll ↓</span></div>
         <nav class="rail" id="rail" aria-label="Work sections">
           {BOXES.map((b) => <a href={`#b-${b.key}`} aria-label={b.label}><span>{b.label}</span></a>)}
         </nav>
@@ -109,28 +109,24 @@ const letters = (s: string) => [...s];
       </ol>
     </section>
 
-    <section class="sec svc pad" id="system" aria-labelledby="system-h">
-      <div class="svh">
-        <div>
-          <p class="eyebrow" style="margin-bottom:24px;font-size:clamp(14px,1.2vw,18px)">What we build</p>
-          <h2 class="rv" id="system-h">One system.<br />Every piece connected.</h2>
-        </div>
+    <section class="sec sys pad" id="system" aria-labelledby="system-h">
+      <div class="sys-head">
+        <p class="eyebrow">What we build</p>
+        <h2 class="rv" id="system-h">One system.<br />Every piece connected.</h2>
         <p class="rv">Your brand, your website, how people find you and how you follow up, built to work together instead of bought one piece at a time.</p>
       </div>
-      <div class="slist" id="slist">
-        {SYSTEM.map((s) => (
-          <div class="si rv" tabindex="0" role="button" aria-expanded="false">
-            <div class="sl">
-              <h3>{s.title}</h3>
-              <div class="more2"><div class="tags">{s.tags.map((t) => <span>{t}</span>)}</div></div>
+      <ol class="sys-list">
+        {SYSTEM.map((s, i) => (
+          <li class="sys-row rv">
+            <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{s.title}</h3>
+            <div class="sys-body">
+              <p>{s.blurb}</p>
+              <ul class="tags" aria-label={`${s.title} includes`}>{s.tags.map((t) => <li>{t}</li>)}</ul>
             </div>
-            <div class="sp">
-              <div class="img"><div class="ph">{s.title}</div></div>
-              <div class="txt"><p>{s.blurb}</p><a href={CONTACT.booking} tabindex="-1">Book a visit →</a></div>
-            </div>
-          </div>
+          </li>
         ))}
-      </div>
+      </ol>
     </section>
 
     <section class="sec pick pad" id="handoff" aria-labelledby="pick-h">
@@ -158,7 +154,7 @@ const letters = (s: string) => [...s];
       </div>
       <div class="big" role="img" aria-label="Sender"></div>
       <footer class="foot" style="padding-left:0;padding-right:0">
-        <span>© {new Date().getFullYear()} Sender Creative</span>
+        <span>© {new Date().getFullYear()} Sender Creative · Marketing agency serving {CONTACT.areas}, Ontario</span>
         <span><a href={CONTACT.instagram}>Instagram</a> · <a href={CONTACT.linkedin}>LinkedIn</a></span>
       </footer>
     </section>

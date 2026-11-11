@@ -9,8 +9,8 @@ interface Props {
 }
 
 const {
-  title = 'Sender Creative · Branding, web, photo + video in Ontario',
-  description = 'Sender Creative is an Ontario studio for trades and local businesses: branding, websites, local SEO, ads, social, and photo + video, under one roof.',
+  title = 'Sender Creative | Marketing Agency for Trades in Hamilton, Haldimand & Norfolk',
+  description = 'We build marketing systems for trades and local businesses in Hamilton, Haldimand and Norfolk: branding, websites, local SEO, social, ads and video. Book a visit.',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -20,7 +20,9 @@ const jsonLd = {
   name: 'Sender Creative',
   url: Astro.site?.href,
   email: CONTACT.email,
-  areaServed: 'Ontario, Canada',
+  description: 'Marketing agency for trades and local businesses: branding, websites, local SEO, social media, ads, photo and video.',
+  areaServed: ['Hamilton', 'Haldimand County', 'Norfolk County'].map((name) => ({ '@type': 'AdministrativeArea', name })),
+  knowsAbout: ['Branding', 'Web design', 'Local SEO', 'Google Business Profile', 'Social media marketing', 'Google Ads', 'Video production'],
   address: { '@type': 'PostalAddress', addressRegion: 'ON', addressCountry: 'CA' },
 };
 ---

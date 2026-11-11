@@ -151,25 +151,6 @@ function onScroll() {
 addEventListener('scroll', onScroll, { passive: true });
 addEventListener('resize', fit);
 
-/* ── Services: rows open on hover / click / keyboard ── */
-{
-  const slist = $('slist');
-  const rows = [...slist.querySelectorAll<HTMLElement>('.si')];
-  let ht: ReturnType<typeof setTimeout> | undefined;
-  const openRow = (r: HTMLElement | null) => rows.forEach((x) => {
-    const o = x === r;
-    x.classList.toggle('open', o);
-    x.setAttribute('aria-expanded', String(o));
-    x.querySelector('.sp a')?.setAttribute('tabindex', o ? '0' : '-1');
-  });
-  rows.forEach((r) => {
-    r.addEventListener('mouseenter', () => { clearTimeout(ht); ht = setTimeout(() => openRow(r), 160); });
-    r.addEventListener('click', (e) => { if ((e.target as HTMLElement).closest('a')) return; openRow(r.classList.contains('open') ? null : r); });
-    r.addEventListener('keydown', (e) => { if (e.target === r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); r.click(); } });
-  });
-  slist.addEventListener('mouseleave', () => { clearTimeout(ht); ht = setTimeout(() => openRow(null), 300); });
-}
-
 /* ── Full-screen menu ── */
 const ml = $('mlist'), mp = $('mprev'), ov = $('ov'), mb = $<HTMLButtonElement>('mbtn');
 const menuLinks = [...ov.querySelectorAll<HTMLAnchorElement>('a')];

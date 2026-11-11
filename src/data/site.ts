@@ -12,6 +12,7 @@ import sixDaysWhite from '../assets/work/six-days-white.svg';
 export const CONTACT = {
   email: 'hello@sendercreative.ca',
   location: 'Ontario, Canada',
+  areas: 'Hamilton, Haldimand & Norfolk',
   instagram: '#',
   linkedin: '#',
   /** Until a booking tool is chosen, "Book a visit" opens an email. */

@@ -212,3 +212,33 @@ html.no-js .nav{opacity:1;transform:none}
   .step h3{margin-top:18px}
   .choice{border-radius:32px 0 0 32px;min-height:auto}
 }
+
+/* ── What we build: open, scannable rows (replaces hover accordion) ── */
+.sys{background:#fff;color:#000}
+.sys-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px clamp(32px,5vw,96px);align-items:end}
+.sys-head .eyebrow{grid-column:1/-1}
+.sys-head h2{font:400 clamp(44px,6.4vw,112px)/.92 var(--disp);letter-spacing:-.05em}
+.sys-head>p:last-child{font-size:clamp(16px,1.3vw,19px);line-height:1.55;color:#333;max-width:46ch}
+.sys-list{list-style:none;margin-top:clamp(56px,7vw,110px)}
+.sys-row{position:relative;display:grid;grid-template-columns:clamp(44px,5vw,80px) minmax(0,.9fr) minmax(0,1.1fr);gap:16px clamp(24px,3vw,56px);align-items:start;padding:clamp(28px,3.2vw,48px) 0}
+.sys-row:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:radial-gradient(circle,#000 1.2px,transparent 1.6px) 0 0/16px 4px repeat-x;opacity:.35;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.sys-row:last-child{border-bottom:0}
+.sys-row .num{display:inline-grid;place-items:center;width:44px;height:44px;border:1px solid #000;border-radius:50%;font:400 12px/1 var(--sans);letter-spacing:.12em;transition:background .4s,color .4s}
+.sys-row:hover .num{background:#000;color:#fff}
+.sys-row h3{font:400 clamp(30px,3.4vw,56px)/1 var(--disp);letter-spacing:-.04em;padding-top:2px;transition:transform .8s var(--ease)}
+.sys-row:hover h3{transform:translateX(10px)}
+.sys-body p{font-size:clamp(16px,1.2vw,18px);line-height:1.55;color:#333;max-width:48ch}
+.sys-body .tags{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.sys-body .tags li{padding:9px 15px;border:1px solid #c4c4c4;border-radius:40px;font:400 14px/1.2 var(--sans);color:#000;transition:border-color .3s,background .3s}
+.sys-row:hover .tags li{border-color:#000}
+@media(max-width:900px){
+  .sys-head{grid-template-columns:1fr}
+  .sys-row{grid-template-columns:44px minmax(0,1fr)}
+  .sys-row h3{align-self:center}
+  .sys-body{grid-column:1/-1}
+}
+@media(max-width:760px){
+  .sys-row .num{width:36px;height:36px;font-size:11px}
+  .sys-row{grid-template-columns:36px minmax(0,1fr);gap:14px 16px}
+  .sys-body .tags li{font-size:13px;padding:8px 13px}
+}
