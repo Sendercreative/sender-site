@@ -71,6 +71,9 @@ export const BOXES = [
 ] as const;
 
 /** Hero headline: [word, line 1, line 2] for the intro, the docked state, then each panel. */
+/** Hero background video (black & white, faded). Stand-in until the edited version is ready. */
+export const HERO_VIDEO = { src: 'https://cdn.capturestudio.ca/Dicam/Dicam-overview.mp4' };
+
 export const HERO = [
   { word: 'look', lines: ['good, wherever', 'you show up.'] },
   { word: 'look', lines: ['at our', 'previous work.'] },

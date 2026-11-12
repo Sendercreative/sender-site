@@ -265,3 +265,17 @@
 .sys-ico .tk svg{width:18px;height:18px}.sys-ico .tk svg.br{width:16px;height:16px}
 @media(min-width:1001px){.sys-ico{display:none}}
 @media(max-width:760px){.pick-s{width:56px}}
+
+/* ── Hero: faded black & white video with faint drifting icons ──
+   The headline is a white 'screen' knockout over .bgfx, so the video sits on top
+   and multiplies: it tints the white and leaves the dark type dark. */
+.hvid{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity 1s ease}
+.flyon .hvid{opacity:1}
+.hvid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05) brightness(1.1);opacity:.28;mix-blend-mode:multiply;
+  -webkit-mask:linear-gradient(90deg,rgba(0,0,0,.35) 0%,#000 55%),linear-gradient(180deg,#000 55%,transparent 100%);-webkit-mask-composite:source-in;
+  mask:linear-gradient(90deg,rgba(0,0,0,.35) 0%,#000 55%) intersect,linear-gradient(180deg,#000 55%,transparent 100%)}
+.hi{position:absolute;z-index:1;translate:-50% -50%;rotate:var(--r);color:#000;opacity:.13}
+.hi svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;animation:tkf 9s ease-in-out infinite;animation-delay:var(--fd)}
+.hi svg.br{fill:currentColor;stroke:none;width:19px;height:19px}
+@media(max-width:760px){.hvid video{opacity:.22;-webkit-mask:linear-gradient(180deg,#000 40%,transparent 100%);mask:linear-gradient(180deg,#000 40%,transparent 100%)}.hi svg{width:18px;height:18px}}
+@media(prefers-reduced-motion:reduce){.hi svg{animation:none}}

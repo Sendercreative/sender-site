@@ -6,16 +6,20 @@ import Tile from '../components/Tile.astro';
 import voidBrand from '../assets/home/void-brand.jpg';
 import sixDaysBrand from '../assets/home/6days-brand.jpg';
 import jbBrand from '../assets/home/jb-brand.jpg';
-import { WORK, BOXES, HERO, PROCESS, SYSTEM, CHOICES, CONTACT } from '../data/site';
+import { HERO_VIDEO, WORK, BOXES, HERO, PROCESS, SYSTEM, CHOICES, CONTACT } from '../data/site';
 import { PIECES, ICONS, BRANDS, scatter } from '../data/mess';
 import { SYSMAP } from '../data/sysmap';
 import sMark from '../assets/s-mark.svg?raw';
 import '../styles/home.css';
 
 const W = WORK;
-const deck = [W.logos[0], W.websites[1], W.logos[3], W.websites[5], W.logos[2], W.websites[4], W.logos[4]].filter(Boolean);
 const letters = (s: string) => [...s];
 const spots = scatter(PIECES.map((p) => !!p.word));
+// Faint icons drifting over the hero video
+const heroIcons = scatter(PIECES.map(() => false), 23).slice(0, 18).map((pos, i) => {
+  const pc = PIECES[(i * 7) % PIECES.length]!;
+  return { ...pos, icon: pc.icon, brand: pc.brand, d: -((i * 1.3) % 9).toFixed(1) };
+});
 const workHref = { logos: '/work/#branding', videos: '/work/#video', websites: '/work/#websites' } as const;
 /** Homepage Websites panel: only these, in this order. */
 const homeSites = ['void-cavitation', '6-days', 'jb-controls']
@@ -39,6 +43,14 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
     <section class="stage" id="stage" aria-label="Introduction and work">
       <div class="pin">
         <div class="bgfx" aria-hidden="true"><b></b><b></b><b></b></div>
+        <div class="hvid" aria-hidden="true">
+          <video id="hvid" src={HERO_VIDEO.src} muted loop playsinline preload="metadata"></video>
+          {heroIcons.map((h) => (
+            <span class="hi" style={`left:${h.x}%;top:${h.y}%;--r:${h.r}deg;--fd:${h.d}s`}>
+              {h.brand ? <svg class="br" viewBox="0 0 24 24"><path d={BRANDS[h.brand]} /></svg> : <svg viewBox="0 0 24 24" set:html={ICONS[h.icon!]} />}
+            </span>
+          ))}
+        </div>
         <div class="mask">
           <div class="htxt pad">
             <div class="hblk" id="hblk">
@@ -56,27 +68,6 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
           {BOXES.map((b) => <a href={`#b-${b.key}`} aria-label={b.label}><span>{b.label}</span></a>)}
         </nav>
 
-        <div class="fly" aria-hidden="true">
-          <div class="deck">
-            {deck.map((p, i) => (
-              <div class="fc" style={`--i:${Math.max(0, 3 - i)}`}>
-                <div class="fi">
-                  {p.video ? (
-                    <div class="fm dk"><video src={p.video.src} poster={p.video.poster} autoplay muted loop playsinline preload="metadata"></video></div>
-                  ) : p.shot ? (
-                    <div class="fm shot"><Image src={p.shot} alt="" widths={[640, 960]} sizes="40vw" loading="lazy" /></div>
-                  ) : p.img ? (
-                    <div class="fm"><Image src={p.img} alt="" width={480} loading={i < 2 ? 'eager' : 'lazy'} /></div>
-                  ) : p.inv ? (
-                    <div class="fm dk"><Image src={p.inv} alt="" width={480} loading="lazy" /></div>
-                  ) : (
-                    <div class:list={['fm', 'tph', { dk: p.dark }]}><span class="tph-l">{p.name}</span><span class="tph-s">{p.ph}</span></div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
 
       <div class="cat" id="work">

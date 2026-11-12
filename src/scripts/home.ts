@@ -23,31 +23,17 @@ const bio = new IntersectionObserver(
 );
 boxes.forEach((b) => bio.observe(b));
 
-/* ── Floating card deck beside the hero ── */
-const fly = document.querySelector<HTMLElement>('.fly')!;
-const FC = [...fly.querySelectorAll<HTMLElement>('.fc')];
-const ord = FC.map((_, i) => i);
-const lay = () => ord.forEach((c, p) => { FC[c].style.setProperty('--p', String(Math.min(p, 4))); FC[c].classList.toggle('hide', p > 3); });
-lay();
-if (!reduced) {
-  setInterval(() => {
-    if (!R.classList.contains('flyon') || document.hidden) return;
-    const t = FC[ord[0]];
-    t.classList.add('off');
-    setTimeout(() => {
-      ord.push(ord.shift()!);
-      t.style.transition = 'none';
-      lay();
-      t.classList.remove('off');
-      void t.offsetWidth;
-      t.style.transition = '';
-    }, 900);
-  }, 3200);
-}
-addEventListener('pointermove', (e) => {
-  fly.style.setProperty('--mx', (e.clientX / innerWidth * 2 - 1).toFixed(3));
-  fly.style.setProperty('--my', (e.clientY / innerHeight * 2 - 1).toFixed(3));
-}, { passive: true });
+/* ── Hero background video: plays only while the hero is showing ── */
+const hvid = document.getElementById('hvid') as HTMLVideoElement | null;
+const syncVid = () => {
+  if (!hvid) return;
+  const show = R.classList.contains('flyon') && !document.hidden && !reduced;
+  if (show && hvid.paused) hvid.play().catch(() => {});
+  else if (!show && !hvid.paused) hvid.pause();
+};
+new MutationObserver(syncVid).observe(R, { attributes: true, attributeFilter: ['class'] });
+document.addEventListener('visibilitychange', syncVid);
+syncVid();
 
 /* ── Hero headline that rewrites itself as you scroll ── */
 const hblk = $('hblk'), lk = $('lk'), ag = $('ag'), lede = $('lede'), rail = $('rail');
