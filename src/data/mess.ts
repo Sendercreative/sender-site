@@ -4,7 +4,18 @@
  * `step` is 0–3 (Book a visit, Check what's working, Build the system, Your call).
  * A piece is either a generic icon (`icon`) or a small word (`word`).
  */
-export type Piece = { step: 0 | 1 | 2 | 3; icon?: keyof typeof ICONS; word?: string; label: string };
+import { siGoogle, siInstagram, siFacebook, siMailchimp, siTiktok } from 'simple-icons';
+
+/** Brand marks (filled), from Simple Icons. */
+export const BRANDS = {
+  google: siGoogle.path,
+  instagram: siInstagram.path,
+  facebook: siFacebook.path,
+  mailchimp: siMailchimp.path,
+  tiktok: siTiktok.path,
+} as const;
+
+export type Piece = { step: 0 | 1 | 2 | 3; icon?: keyof typeof ICONS; brand?: keyof typeof BRANDS; word?: string; label: string };
 
 /** Simple 24×24 stroke icons (generic, no brand marks). */
 export const ICONS = {
@@ -35,6 +46,8 @@ export const ICONS = {
   cycle: '<path d="M19 8.5A7.5 7.5 0 0 0 5.5 9M5 15.5A7.5 7.5 0 0 0 18.5 15"/><path d="M19.5 4v4.5H15M4.5 20v-4.5H9"/>',
   bell: '<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
   inbox: '<path d="M3.5 13.5l2.5-8h12l2.5 8V19h-17z"/><path d="M3.5 13.5h5l1 2h5l1-2h5"/>',
+  target: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/>',
+  trend: '<path d="M3.5 17l5.5-5.5 4 4 7.5-8"/><path d="M15 7.5h5.5V13"/>',
   check: '<circle cx="12" cy="12" r="8.5"/><path d="M8 12.3l2.7 2.7L16 9.5"/>',
 } as const;
 
@@ -44,14 +57,14 @@ export const PIECES: Piece[] = [
   { step: 0, icon: 'calendar', label: 'Booking' },
   { step: 0, icon: 'phone', label: 'Calls' },
   { step: 0, icon: 'clipboard', label: 'Goals' },
-  { step: 0, word: 'Strategy', label: 'Strategy' },
+  { step: 0, icon: 'target', label: 'Strategy' },
   // 02 Check what's working
   { step: 1, icon: 'search', label: 'Search' },
   { step: 1, icon: 'bars', label: 'Analytics' },
   { step: 1, icon: 'star', label: 'Reviews' },
   { step: 1, icon: 'gauge', label: 'Speed' },
-  { step: 1, word: 'Google', label: 'Google' },
-  { step: 1, word: 'SEO', label: 'SEO' },
+  { step: 1, brand: 'google', label: 'Google' },
+  { step: 1, icon: 'trend', label: 'SEO' },
   // 03 Build the system
   { step: 2, icon: 'globe', label: 'Website' },
   { step: 2, icon: 'pen', label: 'Logo + brand' },
@@ -64,10 +77,10 @@ export const PIECES: Piece[] = [
   { step: 2, icon: 'mail', label: 'Email' },
   { step: 2, icon: 'printer', label: 'Print' },
   { step: 2, icon: 'truck', label: 'Vehicle wraps' },
-  { step: 2, word: 'Instagram', label: 'Instagram' },
-  { step: 2, word: 'Facebook', label: 'Facebook' },
-  { step: 2, word: 'Mailchimp', label: 'Mailchimp' },
-  { step: 2, word: 'TikTok', label: 'TikTok' },
+  { step: 2, brand: 'instagram', label: 'Instagram' },
+  { step: 2, brand: 'facebook', label: 'Facebook' },
+  { step: 2, brand: 'mailchimp', label: 'Mailchimp' },
+  { step: 2, brand: 'tiktok', label: 'TikTok' },
   // 04 Your call
   { step: 3, icon: 'key', label: 'Your accounts' },
   { step: 3, icon: 'gear', label: 'Automation' },

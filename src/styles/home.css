@@ -213,5 +213,8 @@
 .kfx .tk.kh{visibility:hidden}
 .kfly{position:fixed;left:0;top:0;z-index:40;pointer-events:none;will-change:transform}
 @media(prefers-reduced-motion:reduce){.mess-field .tk>*{animation:none}}
-@media(max-width:760px){.mess-h{font-size:min(12.5vw,80px)}.mess{min-height:110svh}.tk svg{width:20px;height:20px}.tk b{font-size:10px}}
+@media(max-width:760px){.mess-h{font-size:min(12.5vw,80px)}.mess{min-height:72svh}.mess-field{inset:16px var(--padx) 16px var(--padl)}.tk svg.br{width:17px;height:17px}.tk svg{width:20px;height:20px}.tk b{font-size:10px}}
 @media(min-width:761px){.step{display:flex;flex-direction:column}.step>p{flex:1}}
+
+/* Brand marks: filled, a touch smaller so they sit with the line icons */
+.tk svg.br{fill:currentColor;stroke:none;width:19px;height:19px}

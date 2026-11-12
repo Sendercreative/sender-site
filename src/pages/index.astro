@@ -7,7 +7,7 @@ import voidBrand from '../assets/home/void-brand.jpg';
 import sixDaysBrand from '../assets/home/6days-brand.jpg';
 import jbBrand from '../assets/home/jb-brand.jpg';
 import { WORK, BOXES, HERO, PROCESS, SYSTEM, CHOICES, CONTACT } from '../data/site';
-import { PIECES, ICONS, scatter } from '../data/mess';
+import { PIECES, ICONS, BRANDS, scatter } from '../data/mess';
 import '../styles/home.css';
 
 const W = WORK;
@@ -94,7 +94,7 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
       <div class="mess-field" aria-hidden="true">
         {PIECES.map((pc, i) => (
           <span class="tk" data-k={i} style={`left:${spots[i]?.x ?? 50}%;top:${spots[i]?.y ?? 50}%;--r:${spots[i]?.r ?? 0}deg;--fd:${(i % 7) * -0.9}s`}>
-            {pc.icon ? <svg viewBox="0 0 24 24" set:html={ICONS[pc.icon]} /> : <b>{pc.word}</b>}
+            {pc.brand ? <svg class="br" viewBox="0 0 24 24"><path d={BRANDS[pc.brand]} /></svg> : pc.icon ? <svg viewBox="0 0 24 24" set:html={ICONS[pc.icon]} /> : <b>{pc.word}</b>}
           </span>
         ))}
       </div>
@@ -113,7 +113,7 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
             <ul class="slots" aria-label={`What this step covers`}>
               {PIECES.map((pc, k) => pc.step === i && (
                 <li class="tk slot" data-k={k} title={pc.label}>
-                  {pc.icon ? <><svg viewBox="0 0 24 24" aria-hidden="true" set:html={ICONS[pc.icon]} /><span class="sr">{pc.label}</span></> : <b>{pc.word}</b>}
+                  {pc.brand ? <><svg class="br" viewBox="0 0 24 24" aria-hidden="true"><path d={BRANDS[pc.brand]} /></svg><span class="sr">{pc.label}</span></> : pc.icon ? <><svg viewBox="0 0 24 24" aria-hidden="true" set:html={ICONS[pc.icon]} /><span class="sr">{pc.label}</span></> : <b>{pc.word}</b>}
                 </li>
               ))}
             </ul>
