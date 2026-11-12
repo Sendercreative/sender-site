@@ -305,3 +305,57 @@ document.fonts.ready.then(() => {
   desk.addEventListener('change', tick);
   frame();
 })();
+
+/* ── Converge: as "Your system, your call." arrives, every piece flies into the Sender S ── */
+(() => {
+  const target = document.getElementById('picks'), map = document.getElementById('sysmap');
+  const sec = document.getElementById('system');
+  if (!target || !sec || reduced) return;
+  R.classList.add('cvx');
+  const desk = matchMedia('(min-width:1001px)');
+  const lines = map?.querySelector<SVGElement>('.sm-lines');
+  type P = { s: HTMLElement; f: HTMLElement; d: number };
+  let pairs: P[] = [], mode = '';
+  function build() {
+    const m = desk.matches ? 'd' : 'm';
+    if (m === mode) return;
+    mode = m;
+    pairs.forEach((p) => p.f.remove());
+    const srcs = [...sec!.querySelectorAll<HTMLElement>(m === 'd' ? '.sm-n' : '.sys-ico .tk')];
+    pairs = srcs.map((s, i) => {
+      const f = document.createElement('span');
+      f.className = 'tk cvfly';
+      f.setAttribute('aria-hidden', 'true');
+      f.innerHTML = s.innerHTML;
+      f.style.display = 'none';
+      document.body.appendChild(f);
+      return { s, f, d: ((i * 29) % 13) / 13 * 0.3 };
+    });
+  }
+  const ease = (x: number) => 1 - Math.pow(1 - x, 3);
+  function frame() {
+    build();
+    const vh = innerHeight, tr = target!.getBoundingClientRect();
+    // 0 while the S spot is near the bottom of the screen, 1 once it reaches ~40% up
+    const raw = Math.min(1, Math.max(0, (vh * 0.95 - tr.top) / (vh * 0.55)));
+    const tx = tr.left + tr.width / 2, ty = tr.top + tr.height / 2;
+    target!.style.setProperty('--so', String(Math.max(0, (raw - 0.75) / 0.25)));
+    if (lines) lines.style.opacity = String(1 - Math.min(1, raw * 2.5));
+    for (const p of pairs) {
+      const k = Math.min(1, Math.max(0, (raw - p.d) / (1 - p.d) / 0.85));
+      p.s.style.visibility = k > 0 ? 'hidden' : '';
+      if (k <= 0 || k >= 1) { p.f.style.display = 'none'; continue; }
+      const sr = p.s.getBoundingClientRect(), e = ease(k);
+      const sx = sr.left + sr.width / 2, sy = sr.top + sr.height / 2;
+      const x = sx + (tx - sx) * e, y = sy + (ty - sy) * e;
+      p.f.style.display = '';
+      p.f.style.opacity = String(k < 0.8 ? 1 : (1 - k) / 0.2);
+      p.f.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) scale(${1 - e * 0.6})`;
+    }
+  }
+  let q = false;
+  const tick = () => { if (!q) { q = true; requestAnimationFrame(() => { q = false; frame(); }); } };
+  addEventListener('scroll', tick, { passive: true });
+  addEventListener('resize', tick);
+  frame();
+})();

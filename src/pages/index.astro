@@ -9,6 +9,7 @@ import jbBrand from '../assets/home/jb-brand.jpg';
 import { WORK, BOXES, HERO, PROCESS, SYSTEM, CHOICES, CONTACT } from '../data/site';
 import { PIECES, ICONS, BRANDS, scatter } from '../data/mess';
 import { SYSMAP } from '../data/sysmap';
+import sMark from '../assets/s-mark.svg?raw';
 import '../styles/home.css';
 
 const W = WORK;
@@ -139,6 +140,11 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
             <div class="sys-body">
               <p>{s.blurb}</p>
               <ul class="tags" aria-label={`${s.title} includes`}>{s.tags.map((t) => <li>{t}</li>)}</ul>
+              <div class="sys-ico" aria-hidden="true">
+                {SYSMAP[i]!.items.map((it) => (
+                  <span class="tk">{it.brand ? <svg class="br" viewBox="0 0 24 24"><path d={BRANDS[it.brand]} /></svg> : <svg viewBox="0 0 24 24" set:html={ICONS[it.icon!]} />}</span>
+                ))}
+              </div>
             </div>
           </li>
         ))}
@@ -173,7 +179,10 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
 
     <section class="sec pick pad" id="handoff" aria-labelledby="pick-h">
       <p class="eyebrow">Once it's built</p>
-      <h2 class="rv" id="pick-h">Your system, your call.</h2>
+      <div class="pick-top">
+        <h2 class="rv" id="pick-h">Your system, your call.</h2>
+        <span class="pick-s" id="picks" aria-hidden="true" set:html={sMark} />
+      </div>
       <div class="choices">
         {CHOICES.map((c, i) => (
           <article class:list={['choice', 'rv', { dark: i === 1 }]} style={`--d:${i * 0.1}s`}>

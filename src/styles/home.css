@@ -112,7 +112,7 @@
 
 /* ── Our process ── */
 .proc{background:#fff;color:#000}
-.proc>h2,.pick>h2{margin-top:24px;font:700 clamp(34px,3.97vw,69px)/.92 var(--disp);letter-spacing:-.025em}
+.proc>h2,.pick>h2,.pick-top h2{margin-top:24px;font:700 clamp(34px,3.97vw,69px)/.92 var(--disp);letter-spacing:-.025em}
 .steps{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(24px,3vw,48px);margin-top:clamp(56px,7vw,110px);position:relative}
 .steps:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:radial-gradient(circle,#000 1.2px,transparent 1.6px) 0 0/16px 4px repeat-x;opacity:.35;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 .step{padding-top:clamp(28px,3vw,44px);transition-delay:var(--d,0s)}
@@ -252,3 +252,16 @@
   .sys-row.cur .num{background:#000;color:#fff}
 }
 @media(min-width:1001px) and (prefers-reduced-motion:reduce){.ln,.sm-n,.sm-anc{transition:none}}
+
+/* ── Everything converges into the Sender S beside "Your system, your call." ── */
+.pick-top{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.pick-s{flex:none;width:clamp(64px,8vw,132px);aspect-ratio:423/374;color:#000;margin-top:24px}
+.pick-s svg{display:block;width:100%;height:100%}
+.cvx .pick-s{opacity:var(--so,0);transform:scale(calc(.4 + .6 * var(--so,0))) rotate(calc((1 - var(--so,0)) * -40deg));transition:none}
+.cvfly{position:fixed;left:0;top:0;z-index:40;pointer-events:none;will-change:transform,opacity}
+.sm-lines{transition:opacity .2s}
+/* mobile: each system row shows its pieces */
+.sys-ico{display:flex;flex-wrap:wrap;gap:12px 14px;margin-top:16px}
+.sys-ico .tk svg{width:18px;height:18px}.sys-ico .tk svg.br{width:16px;height:16px}
+@media(min-width:1001px){.sys-ico{display:none}}
+@media(max-width:760px){.pick-s{width:56px}}
