@@ -49,7 +49,7 @@ export const VIDEO_LIBRARY: WorkItem[] = [
   HIGHLIGHTS,
   { name: 'Dicam overview', tag: 'Overview video', video: { src: 'https://cdn.capturestudio.ca/Dicam/Dicam-overview.mp4' } },
   GS_EXPLAINER,
-  { name: 'Round 2 Tires', tag: 'Social reel', instagram: 'https://www.instagram.com/reel/DdSMpJ7R2b5/' },
+  { name: 'Round 2 Tires', tag: 'Highlight reel', video: { src: '/media/round2tires.mp4', poster: '/media/round2tires.jpg', portrait: true } },
   { name: 'Mercy Church', tag: 'Video', youtube: 'https://www.youtube.com/watch?v=m2QR6L9595k' },
 ];
 

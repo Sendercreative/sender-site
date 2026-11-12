@@ -26,10 +26,9 @@ const schema = [
 >
   <div class="pg">
     <header class="pg-hero pad">
-      <div class="hero-orb" aria-hidden="true"></div>
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Work</span></nav>
-      <h1 class="rv">Work we’ve done for the people who build things.</h1>
-      <p class="lead rv">Brands and websites we’ve designed and built, logo to launch.</p>
+      <h1 class="rv">Look at some of our previous work.</h1>
+      <p class="lead rv">From logo to launch, we’ll help build your brand identity.</p>
       <div class="btns rv">
         <a class="btn line" href="#projects">Projects</a>
         <a class="btn line" href="#video">Video</a>
@@ -39,7 +38,7 @@ const schema = [
     <section class="sec wstrip pad" id="projects" aria-labelledby="proj-h">
       <span id="branding"></span><span id="websites"></span>
       <div class="sh dots" style="padding-top:clamp(24px,3vw,40px)">
-        <h2 id="proj-h" class="rv">Logo + website</h2>
+        <h2 id="proj-h" class="rv">Branding packages</h2>
         <p class="rv">Every project here started with the brand and ended with a site that puts it to work. <a href="/logo-design-branding/" style="border-bottom:1px solid">Branding</a> · <a href="/website-lead-capture/" style="border-bottom:1px solid">Websites</a></p>
       </div>
       <div class="pgrid">
@@ -47,9 +46,10 @@ const schema = [
           <a class="pcard rv" href={projectHref(p)}>
             {(() => {
               const im = p.images ?? {};
-              const logo = !im.hero && (im.logoDark ?? im.logoLight);
-              const dark = !im.hero ? !!im.logoDark || !im.logoLight : true;
-              return <Ph img={im.hero ?? (logo || undefined)} label={`${p.name} · cover`} size="2400 × 1350" ratio="16/10" dark={dark} bg={logo && dark ? p.darkBg : undefined} fit={logo ? 'contain' : 'cover'} inset={logo ? '20%' : undefined} alt="" sizes="(max-width:760px) 100vw, 50vw" />;
+              // Website screenshot first; the logo if there isn't one. (Van/mockup heroes live at the bottom of each project page.)
+              const logo = !im.desktop && (im.logoDark ?? im.logoLight);
+              const dark = !im.desktop ? !!im.logoDark || !im.logoLight : false;
+              return <Ph img={im.desktop ?? (logo || undefined)} class={im.desktop ? 'shot-top' : undefined} label={`${p.name} · cover`} size="2400 × 1350" ratio="16/10" dark={dark} bg={logo && dark ? p.darkBg : undefined} fit={logo ? 'contain' : 'cover'} inset={logo ? '20%' : undefined} alt="" sizes="(max-width:760px) 100vw, 50vw" />;
             })()}
             <div class="t"><h3>{p.name}</h3><span class="tag">{p.services.join(' + ')}{p.status === 'soon' ? ' · Soon' : ''}</span></div>
             <p>{p.industry}</p>
@@ -63,7 +63,7 @@ const schema = [
         <h2 id="vid-h" class="rv">Video</h2>
         <p class="rv">Shot and edited in-house: brand films, explainers and motion. <a href="/photo-video/" style="border-bottom:1px solid">More on photo + video →</a></p>
       </div>
-      <div class="wgrid two">
+      <div class="vstack">
         {VIDEO_LIBRARY.map((item) => <Tile item={item} />)}
       </div>
     </section>
