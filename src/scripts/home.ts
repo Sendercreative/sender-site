@@ -139,7 +139,9 @@ function update() {
   vlabs.forEach((s, i) => s.classList.toggle('on', i === idx));
   // Mobile: the hero text scrolls up and off with the page instead of docking
   const mob = innerWidth <= 760;
-  hblk.style.translate = mob ? `0 ${-y}px` : '';
+  // Mobile: the headline rides up with the page, then holds just under the nav bar
+  if (mob) { hblk.style.translate = '0 0'; const rest = hblk.getBoundingClientRect().top; hblk.style.translate = `0 ${-Math.min(y, Math.max(0, rest - 74))}px`; }
+  else hblk.style.translate = '';
   if (mob) place();
   R.classList.toggle('flyon', !d);
   rail.style.setProperty('--dy', `${-y * 0.5}px`);

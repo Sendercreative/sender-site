@@ -281,3 +281,10 @@
 .tile .m.phone{background:#151515;border-radius:clamp(18px,2vw,30px);box-shadow:inset 0 0 0 1px #3a3a3a,0 24px 50px -26px rgba(0,0,0,.35)}
 .tile .m.phone img{inset:clamp(3px,.35vw,5px);width:calc(100% - 2*clamp(3px,.35vw,5px));height:calc(100% - 2*clamp(3px,.35vw,5px));border-radius:calc(clamp(18px,2vw,30px) - clamp(3px,.35vw,5px))}
 .tile .m.phone:after{content:"";position:absolute;z-index:2;inset:auto;top:clamp(8px,.9vw,13px);left:50%;width:26%;height:clamp(6px,.75vw,11px);translate:-50% 0;border-radius:20px;background:#0a0a0a;mix-blend-mode:normal}
+
+/* ── Mobile hero: headline up top, video underneath; panels follow closely ── */
+@media(max-width:760px){
+  .htxt{justify-content:flex-start;padding-top:104px}
+  .hvid video{top:44%;bottom:auto;right:0;width:100%;height:46%;opacity:.32;-webkit-mask:linear-gradient(180deg,transparent 0%,#000 22%,#000 70%,transparent 100%);mask:linear-gradient(180deg,transparent 0%,#000 22%,#000 70%,transparent 100%)}
+  .cat{margin-top:6svh}
+}
