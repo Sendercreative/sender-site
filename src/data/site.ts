@@ -8,8 +8,9 @@ export const CONTACT = {
   phoneHref: '+19055174522',
   location: 'Ontario, Canada',
   areas: 'Hamilton, Haldimand & Norfolk',
-  instagram: '#',
-  linkedin: '#',
+  instagram: 'https://www.instagram.com/sender.creative/',
+  linkedin: 'https://www.linkedin.com/company/75459003/',
+  facebook: 'https://www.facebook.com/sendercreative/',
   /** "Book a call" buttons: Ben's Cal.com 15-minute booking page. */
   booking: 'https://cal.com/ben-nobels/15min',
 };
