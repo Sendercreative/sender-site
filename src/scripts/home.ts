@@ -132,9 +132,12 @@ function update() {
   boxes.forEach((b) => { const t = b.getBoundingClientRect().top - innerHeight * 0.55; k = Math.max(k, 1 - Math.abs(t) / X); });
   k = Math.min(1, Math.max(0, k));
   k = k * k * (3 - 2 * k);
+  // Mobile: the cards scroll over the headline, so it stays on "look at our previous work"
+  const mobile = innerWidth <= 760;
+  if (mobile) k = 0;
   lk.style.filter = k > 0.005 ? `blur(${(k * 22).toFixed(1)}px)` : '';
   lk.style.opacity = (1 - k).toFixed(3);
-  setLines(!d ? 0 : idx < 0 ? 1 : idx + 2);
+  setLines(!d ? 0 : idx < 0 || mobile ? 1 : idx + 2);
   dots.forEach((a, i) => a.classList.toggle('on', i === idx));
   vlabs.forEach((s, i) => s.classList.toggle('on', i === idx));
   // Mobile: the hero text scrolls up and off with the page instead of docking

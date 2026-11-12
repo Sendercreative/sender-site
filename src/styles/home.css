@@ -292,3 +292,6 @@
 /* Tighter phone corners */
 .tile .m.phone{border-radius:clamp(12px,1.2vw,18px)}
 .tile .m.phone img{border-radius:calc(clamp(12px,1.2vw,18px) - clamp(3px,.35vw,5px))}
+
+/* Mobile: section names already run vertically beside the cards */
+@media(max-width:760px){.box .bxh{display:none}}
