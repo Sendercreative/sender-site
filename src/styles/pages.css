@@ -16,7 +16,6 @@
 .btn.line{border:1px solid #000}
 .btn.line:before{content:"";position:absolute;inset:0;z-index:-1;background:#000;transform:translateY(101%);transition:transform .6s var(--ease)}
 .btn.line:hover{color:#fff}.btn.line:hover:before{transform:none}
-.hero-orb{position:absolute;z-index:0;right:-12vw;top:8vh;width:min(52vw,760px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#efefef,#cfcfcf 45%,#f6f6f6 75%);filter:blur(2px);opacity:.55;pointer-events:none}
 .pg-hero>*:not(.hero-orb){position:relative;z-index:1}
 
 /* Dotted rule shared by rows */
@@ -126,5 +125,5 @@
   .ilist,.cards,.wgrid,.wgrid.two{grid-template-columns:1fr}
   .incl .panel{border-radius:36px 0 0 36px}
   .card{border-radius:32px 0 0 32px;min-height:auto}
-  .hero-orb{width:90vw;right:-40vw;top:4vh}
+
 }
