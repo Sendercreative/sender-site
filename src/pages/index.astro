@@ -15,11 +15,6 @@ import '../styles/home.css';
 const W = WORK;
 const letters = (s: string) => [...s];
 const spots = scatter(PIECES.map((p) => !!p.word));
-// Faint icons drifting over the hero video
-const heroIcons = scatter(PIECES.map(() => false), 23).slice(0, 18).map((pos, i) => {
-  const pc = PIECES[(i * 7) % PIECES.length]!;
-  return { ...pos, icon: pc.icon, brand: pc.brand, d: -((i * 1.3) % 9).toFixed(1) };
-});
 const workHref = { logos: '/work/#branding', videos: '/work/#video', websites: '/work/#websites' } as const;
 /** Homepage Websites panel: only these, in this order. */
 const homeSites = ['void-cavitation', '6-days', 'jb-controls']
@@ -45,11 +40,6 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
         <div class="bgfx" aria-hidden="true"><b></b><b></b><b></b></div>
         <div class="hvid" aria-hidden="true">
           <video id="hvid" src={HERO_VIDEO.src} poster={HERO_VIDEO.poster} muted loop playsinline preload="metadata"></video>
-          {heroIcons.map((h) => (
-            <span class="hi" style={`left:${h.x}%;top:${h.y}%;--r:${h.r}deg;--fd:${h.d}s`}>
-              {h.brand ? <svg class="br" viewBox="0 0 24 24"><path d={BRANDS[h.brand]} /></svg> : <svg viewBox="0 0 24 24" set:html={ICONS[h.icon!]} />}
-            </span>
-          ))}
         </div>
         <div class="mask">
           <div class="htxt pad">

@@ -21,16 +21,19 @@ const io = new IntersectionObserver(
 document.querySelectorAll('.rv').forEach((el) => io.observe(el));
 
 /* ── Below-the-fold videos: only download and play while on screen ── */
+// A pause only counts as the visitor's choice if it happens while the video is on screen.
+// (The 'pause' event fires after the fact, so we track visibility instead of a flag.)
 const userPaused = new WeakSet<HTMLVideoElement>();
-let autoPausing = false;
+const inView = new WeakSet<HTMLVideoElement>();
 const vio = new IntersectionObserver((es) => es.forEach((e) => {
   const v = e.target as HTMLVideoElement;
-  if (e.isIntersecting) { if (!reduced && !userPaused.has(v)) v.play().catch(() => {}); }
-  else { autoPausing = true; v.pause(); autoPausing = false; }
-}), { rootMargin: '200px 0px' });
+  if (e.isIntersecting) { inView.add(v); if (!reduced && !userPaused.has(v)) v.play().catch(() => {}); }
+  else { inView.delete(v); v.pause(); }
+}), { threshold: 0.25 });
 document.querySelectorAll<HTMLVideoElement>('video.lazyv').forEach((v) => {
+  v.muted = true;
   vio.observe(v);
-  v.addEventListener('pause', () => { if (!autoPausing) userPaused.add(v); });
+  v.addEventListener('pause', () => { if (inView.has(v) && !document.hidden) userPaused.add(v); });
   v.addEventListener('play', () => userPaused.delete(v));
 });
 
