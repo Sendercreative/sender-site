@@ -38,15 +38,9 @@ document.querySelectorAll<HTMLVideoElement>('video.lazyv').forEach((v) => {
 });
 
 /* ── Full-screen menu ── */
-const ml = $('mlist'), mp = $('mprev'), ov = $('ov'), mb = $<HTMLButtonElement>('mbtn');
+const ml = $('mlist'), ov = $('ov'), mb = $<HTMLButtonElement>('mbtn');
 const menuLinks = [...ov.querySelectorAll<HTMLAnchorElement>('a')];
 ml.querySelectorAll<HTMLAnchorElement>('.ml').forEach((a) => {
-  a.addEventListener('mouseenter', () => {
-    mp.querySelector('b')!.textContent = a.dataset.title || '';
-    mp.querySelector('span')!.textContent = a.dataset.blurb || '';
-    mp.classList.add('on');
-  });
-  a.addEventListener('mouseleave', () => mp.classList.remove('on'));
   a.addEventListener('click', () => toggleMenu(false));
 });
 function toggleMenu(o: boolean) {
