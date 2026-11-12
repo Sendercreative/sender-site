@@ -89,3 +89,13 @@
 .case-head + .sec{padding-top:0}
 /* Phones: let long service lists wrap under the name instead of pushing the card wide */
 @media(max-width:760px){.pcard .t{flex-direction:column;gap:8px}.pcard .tag{white-space:normal}}
+
+/* ── Slimmer, more realistic phone frame ── */
+.phone{position:relative;padding:6px;border-radius:38px;background:#151515;box-shadow:inset 0 0 0 1px #3a3a3a,0 0 0 1px rgba(0,0,0,.08),0 28px 60px -28px rgba(0,0,0,.4)}
+.phone .slot{border-radius:32px}
+.phone:after{content:"";position:absolute;z-index:2;top:14px;left:50%;width:26%;height:15px;translate:-50% 0;border-radius:20px;background:#0a0a0a}
+@media(max-width:900px){
+  .bw .phone{padding:3px;border-radius:15px;box-shadow:inset 0 0 0 1px #3a3a3a,0 14px 30px -16px rgba(0,0,0,.4)}
+  .bw .phone .slot{border-radius:12px}
+  .bw .phone:after{top:6px;height:5px;width:24%}
+}
