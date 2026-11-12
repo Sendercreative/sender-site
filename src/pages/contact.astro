@@ -14,8 +14,8 @@ const schema = [
 ];
 ---
 <Base
-  title="Contact Sender Creative | Book a Visit in Hamilton, Haldimand & Norfolk"
-  description={`Book a visit with Sender Creative. Call ${CONTACT.phone} or email ${CONTACT.email}. Marketing for local businesses across Hamilton, Haldimand and Norfolk.`}
+  title="Contact Sender Creative | Book a Call · Hamilton, Haldimand & Norfolk"
+  description={`Book a call with Sender Creative. Call ${CONTACT.phone} or email ${CONTACT.email}. Marketing for local businesses across Hamilton, Haldimand and Norfolk.`}
   schema={schema}
   ctaEyebrow="Sometimes you just gotta"
   ctaHeading="Send’r."
@@ -25,20 +25,16 @@ const schema = [
       <div class="hero-orb" aria-hidden="true"></div>
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Contact</span></nav>
       <h1 class="rv">Let’s talk about your business.</h1>
-      <p class="lead rv">Tell us what you’re working on. The easiest place to start is a visit: we come to you, see how things run, and tell you honestly what would help.</p>
+      <p class="lead rv">Tell us what you’re working on. The easiest place to start is a quick call. If it’s a fit, we’ll come see how things run and tell you honestly what would help.</p>
     </header>
 
     <section class="sec pad" style="padding-top:0" aria-label="Ways to reach us">
       <div class="cgrid">
         <ul class="cways">
           <li class="dots rv">
-            <p class="k">Book a visit</p>
-            <a href={CONTACT.booking}>Pick a time →</a>
-            <small>We come to you, anywhere across {CONTACT.areas}.</small>
-          </li>
-          <li class="dots rv">
-            <p class="k">Call</p>
+            <p class="k">Book a call</p>
             <a href={`tel:${CONTACT.phoneHref}`}>{CONTACT.phone}</a>
+            <small>Ten or fifteen minutes is usually enough. If we miss you, we’ll call you back.</small>
           </li>
           <li class="dots rv">
             <p class="k">Email</p>
@@ -56,7 +52,7 @@ const schema = [
           <ol>
             {PROCESS.map((p) => <li><span><b>{p.title}</b>{p.blurb}</span></li>)}
           </ol>
-          <a class="btn-light" href={CONTACT.booking}>Book a visit →</a>
+          <a class="btn-light" href={CONTACT.booking} data-call>Book a call →</a>
         </aside>
       </div>
     </section>

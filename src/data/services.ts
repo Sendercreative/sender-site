@@ -178,7 +178,7 @@ export const SERVICES: Service[] = [
       { title: 'Marketing roadmap', text: 'A step-by-step plan, in priority order, for what to do first.' },
     ],
     faq: [
-      { q: 'Is this the same as the visit?', a: 'Every project starts with a visit. A consultation goes further: a full review and a written plan you can act on, whether or not we build it.' },
+      { q: 'Is this the same as the first call?', a: 'Every project starts with a call, and a visit if it’s a fit. A consultation goes further: a full review and a written plan you can act on, whether or not we build it.' },
       { q: 'Do I have to hire you afterwards?', a: 'No. The plan is yours to use however you like.' },
     ],
   },

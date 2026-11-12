@@ -11,7 +11,7 @@ const { eyebrow = 'Start here', heading = 'Ready to send it?' } = Astro.props;
   <p class="eyebrow" style="margin-bottom:28px">{eyebrow}</p>
   <h2 class="rv" id="contact-h">{heading}</h2>
   <div class="cta-row">
-    <a class="btn-light" href={CONTACT.booking}>Book a visit →</a>
+    <a class="btn-light" href={CONTACT.booking} data-call>Book a call →</a>
     <a class="mail" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
   </div>
   <div class="big" role="img" aria-label="Sender"></div>

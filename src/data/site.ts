@@ -10,8 +10,9 @@ export const CONTACT = {
   areas: 'Hamilton, Haldimand & Norfolk',
   instagram: '#',
   linkedin: '#',
-  /** Until a booking tool is chosen, "Book a visit" opens an email. */
-  booking: 'mailto:hello@sendercreative.ca?subject=Book%20a%20visit',
+  /** "Book a call" buttons: tap-to-call (on desktop, site.ts swaps it for an email). */
+  booking: 'tel:+19055174522',
+  bookingEmail: 'mailto:hello@sendercreative.ca?subject=Book%20a%20call',
 };
 
 export type WorkItem = {
@@ -86,7 +87,7 @@ export const HERO = [
 ];
 
 export const PROCESS = [
-  { title: 'Book a visit', blurb: 'We come to you. We see your shop, your space or your job site, and learn what you want more of.' },
+  { title: 'Start with a call', blurb: 'Tell us what you’re working on. If it’s a fit, we’ll come see your shop, space or job site.' },
   { title: "Check what's working", blurb: "Your brand, site, Google profile and socials. We keep what works and fix what doesn't." },
   { title: 'Build the system', blurb: 'Around what you already have, or from scratch. Every piece set up in your name, working together.' },
   { title: 'Your call', blurb: 'Take the keys and run it yourself, or we keep it running for you.' },
@@ -94,7 +95,7 @@ export const PROCESS = [
 
 /** What the system is made of. Each row opens to show its parts. */
 export const SYSTEM = [
-  { title: 'Strategy', blurb: 'Who you serve, the jobs you want more of, and where. It all starts with a visit.', tags: ['On-site visit', 'Current setup check', 'Service area', 'Goals + priorities'] },
+  { title: 'Strategy', blurb: 'Who you serve, the jobs you want more of, and where. It all starts with a call.', tags: ['Discovery call', 'On-site visit', 'Current setup check', 'Service area', 'Goals + priorities'] },
   { title: 'Brand & Content', blurb: 'Your look, refined or rebuilt, plus real photo and video of your work to fuel everything else.', tags: ['Logo + brand', 'Brand guidelines', 'Photography', 'Video + reels', 'Drone'] },
   { title: 'Website', blurb: 'Informs, assists and converts. A site that keeps working when you’re not, with quotes landing straight in your inbox.', tags: ['Design + build', 'Quote + booking forms', 'Copywriting', 'Hosting + care'] },
   { title: 'Get Found', blurb: 'Show up when someone nearby needs you, and stay seen by the right people the rest of the time.', tags: ['Google Business Profile', 'Local SEO', 'Social media', 'Google + Meta ads', 'Print', 'Signage + vehicle wraps'] },
@@ -111,8 +112,8 @@ export const CHOICES = [
 export const PAGES = [
   { title: 'Work', href: '/work/', blurb: 'Logos, videos and websites for local businesses.' },
   { title: 'Services', href: '/services/', blurb: 'Branding, websites, local SEO, photo + video, design and management.' },
-  { title: 'Process', href: '/#process', blurb: 'Book a visit. We check what’s working, build the system, and hand you the keys or run it.' },
-  { title: 'Contact', href: '/contact/', blurb: 'Book a visit. We’ll take it from there.' },
+  { title: 'Process', href: '/#process', blurb: 'Start with a call. We check what’s working, build the system, and hand you the keys or run it.' },
+  { title: 'Contact', href: '/contact/', blurb: 'Book a call. We’ll take it from there.' },
 ];
 
 export const SERVICE_LINKS = SERVICES_DATA.map((s) => ({ title: s.short, href: `/${s.slug}/` }));

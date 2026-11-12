@@ -1,7 +1,7 @@
 /**
  * "Marketing is complicated" pieces. Each one starts scattered around the
  * headline and flies into a neat row under the process step it belongs to.
- * `step` is 0–3 (Book a visit, Check what's working, Build the system, Your call).
+ * `step` is 0–3 (Start with a call, Check what's working, Build the system, Your call).
  * A piece is either a generic icon (`icon`) or a small word (`word`).
  */
 import { siGoogle, siInstagram, siFacebook, siMailchimp, siTiktok } from 'simple-icons';
@@ -52,7 +52,7 @@ export const ICONS = {
 } as const;
 
 export const PIECES: Piece[] = [
-  // 01 Book a visit
+  // 01 Start with a call
   { step: 0, icon: 'pin', label: 'Service area' },
   { step: 0, icon: 'calendar', label: 'Booking' },
   { step: 0, icon: 'phone', label: 'Calls' },
