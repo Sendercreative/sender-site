@@ -104,12 +104,12 @@ function setLines(i: number) {
   ag.setAttribute('aria-label', `${HERO[i].word} ${HERO[i].lines.join(' ')}`);
   clearTimeout(swapT);
   if (docking) {
-    ag.innerHTML = HERO[i].lines.map((t) => `<span class="pop on" aria-hidden="true"><span>${t}</span></span>`).join('');
+    ag.innerHTML = `<span class="sr-only">${HERO[i].word} ${HERO[i].lines.join(' ')}</span>` + HERO[i].lines.map((t) => `<span class="pop on" aria-hidden="true"><span>${t}</span></span>`).join('');
     return;
   }
   [...ag.children].forEach((o) => { o.classList.remove('on'); o.classList.add('out'); });
   swapT = setTimeout(() => {
-    ag.innerHTML = HERO[i].lines.map((t) => `<span class="pop" aria-hidden="true"><span>${t}</span></span>`).join('');
+    ag.innerHTML = `<span class="sr-only">${HERO[i].word} ${HERO[i].lines.join(' ')}</span>` + HERO[i].lines.map((t) => `<span class="pop" aria-hidden="true"><span>${t}</span></span>`).join('');
     fit();
     placeFor(1400);
     requestAnimationFrame(() => requestAnimationFrame(() => [...ag.children].forEach((c) => c.classList.add('on'))));

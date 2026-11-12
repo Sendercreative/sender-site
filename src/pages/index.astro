@@ -46,6 +46,7 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
             <div class="hblk" id="hblk">
               <span class="lk" id="lk" aria-hidden="true">{letters(HERO[0].word).map((c) => <i>{c}</i>)}</span>
               <h1 class="ag" id="ag" aria-label={`${HERO[0].word} ${HERO[0].lines.join(' ')}`}>
+                <span class="sr-only">{`${HERO[0].word} ${HERO[0].lines.join(' ')}`}</span>
                 {HERO[0].lines.map((t) => <span class="pop" aria-hidden="true"><span>{t}</span></span>)}
               </h1>
             </div>
