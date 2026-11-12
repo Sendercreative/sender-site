@@ -114,9 +114,3 @@ if (!reduced) {
 }
 
 
-/* ── "Book a call": tap-to-call on phones; on computers (no phone to dial) it opens an email instead ── */
-if (matchMedia('(hover:hover) and (pointer:fine)').matches) {
-  document.querySelectorAll<HTMLAnchorElement>('a[data-call]').forEach((a) => {
-    a.href = 'mailto:hello@sendercreative.ca?subject=Book%20a%20call&body=Hi%20Ben%2C%20a%20good%20time%20to%20call%20me%20is%3A%20';
-  });
-}

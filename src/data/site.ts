@@ -10,9 +10,8 @@ export const CONTACT = {
   areas: 'Hamilton, Haldimand & Norfolk',
   instagram: '#',
   linkedin: '#',
-  /** "Book a call" buttons: tap-to-call (on desktop, site.ts swaps it for an email). */
-  booking: 'tel:+19055174522',
-  bookingEmail: 'mailto:hello@sendercreative.ca?subject=Book%20a%20call',
+  /** "Book a call" buttons: Ben's Cal.com 15-minute booking page. */
+  booking: 'https://cal.com/ben-nobels/15min',
 };
 
 export type WorkItem = {

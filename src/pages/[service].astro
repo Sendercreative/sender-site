@@ -61,7 +61,7 @@ const schema = [
       <h1 class="rv">{s.title}</h1>
       <p class="lead rv">{s.intro}</p>
       <div class="btns rv">
-        <a class="btn dark" href={CONTACT.booking} data-call>Book a call →</a>
+        <a class="btn dark" href={CONTACT.booking} target="_blank" rel="noopener">Book a call →</a>
         {s.work && <a class="btn line" href={`/work/#${workAnchor[s.work]}`}>See the work</a>}
       </div>
     </header>

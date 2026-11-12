@@ -33,8 +33,12 @@ const schema = [
         <ul class="cways">
           <li class="dots rv">
             <p class="k">Book a call</p>
+            <a href={CONTACT.booking} target="_blank" rel="noopener">Pick a time →</a>
+            <small>A 15-minute call. Pick whatever time suits you.</small>
+          </li>
+          <li class="dots rv">
+            <p class="k">Call</p>
             <a href={`tel:${CONTACT.phoneHref}`}>{CONTACT.phone}</a>
-            <small>Ten or fifteen minutes is usually enough. If we miss you, we’ll call you back.</small>
           </li>
           <li class="dots rv">
             <p class="k">Email</p>
@@ -52,7 +56,7 @@ const schema = [
           <ol>
             {PROCESS.map((p) => <li><span><b>{p.title}</b>{p.blurb}</span></li>)}
           </ol>
-          <a class="btn-light" href={CONTACT.booking} data-call>Book a call →</a>
+          <a class="btn-light" href={CONTACT.booking} target="_blank" rel="noopener">Book a call →</a>
         </aside>
       </div>
     </section>
