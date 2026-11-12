@@ -99,3 +99,7 @@
   .bw .phone .slot{border-radius:12px}
   .bw .phone:after{top:6px;height:5px;width:24%}
 }
+
+/* Tighter phone corners */
+.phone{border-radius:24px}.phone .slot{border-radius:19px}
+@media(max-width:900px){.bw .phone{border-radius:10px}.bw .phone .slot{border-radius:8px}}

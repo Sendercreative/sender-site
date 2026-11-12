@@ -288,3 +288,7 @@
   .hvid video{top:44%;bottom:auto;right:0;width:100%;height:46%;opacity:.32;-webkit-mask:linear-gradient(180deg,transparent 0%,#000 22%,#000 70%,transparent 100%);mask:linear-gradient(180deg,transparent 0%,#000 22%,#000 70%,transparent 100%)}
   .cat{margin-top:6svh}
 }
+
+/* Tighter phone corners */
+.tile .m.phone{border-radius:clamp(12px,1.2vw,18px)}
+.tile .m.phone img{border-radius:calc(clamp(12px,1.2vw,18px) - clamp(3px,.35vw,5px))}
