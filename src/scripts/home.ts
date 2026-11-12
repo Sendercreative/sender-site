@@ -143,7 +143,15 @@ function update() {
   // Mobile: the hero text scrolls up and off with the page instead of docking
   const mob = innerWidth <= 760;
   // Mobile: the headline rides up with the page, then holds just under the nav bar
-  if (mob) { hblk.style.translate = '0 0'; const rest = hblk.getBoundingClientRect().top; hblk.style.translate = `0 ${-Math.min(y, Math.max(0, rest - 74))}px`; }
+  if (mob) {
+    hblk.style.translate = '0 0';
+    const r = hblk.getBoundingClientRect();
+    let dy = Math.min(y, Math.max(0, r.top - 74));
+    // ...until the first card arrives, then it gets pushed up and off the page ahead of it
+    const cardTop = boxes[0]!.getBoundingClientRect().top;
+    dy = Math.max(dy, r.bottom - (cardTop - 28));
+    hblk.style.translate = `0 ${-dy}px`;
+  }
   else hblk.style.translate = '';
   if (mob) place();
   R.classList.toggle('flyon', !d);
