@@ -98,7 +98,7 @@ export const SYSTEM = [
 ];
 
 export const CHOICES = [
-  { kicker: 'Option one', title: 'Take the keys', blurb: 'We hand it over: accounts, files, logins, and a walkthrough so your team knows how it runs. A clean break.', note: 'Want us to keep hosting your site? That’s the only thing you’d still pay us for.' },
+  { kicker: 'Option one', title: 'Take the keys', blurb: 'We hand it over: accounts, files, logins, and a walkthrough so your team knows how it runs. A clean break.', note: 'This is why we build everything separately, in your name. (Website hosting excluded.)' },
   { kicker: 'Option two', title: 'We run it', blurb: 'We keep it going month to month: posting, shooting, ads, reviews, reporting. You run your business.', note: 'Everything stays in your name either way.' },
 ];
 
