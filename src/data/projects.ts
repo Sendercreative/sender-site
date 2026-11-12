@@ -34,6 +34,8 @@ export type Project = {
   /** Public site. Omit `url` (or set status 'soon') until it's live. */
   url?: string;
   status?: 'live' | 'soon';
+  /** Brand's own dark, used behind the reversed logo instead of black */
+  darkBg?: string;
   industry: string;
   year?: string;
   services: string[];
@@ -134,6 +136,7 @@ const LIST: Project[] = [
   },
   {
     slug: 'ontario-window-door-products',
+    darkBg: '#272727',
     name: 'Ontario Window & Door Products',
     url: 'https://ontwindowdoorproducts.com/',
     year: '2025',
