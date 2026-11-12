@@ -8,6 +8,7 @@ import sixDaysBrand from '../assets/home/6days-brand.jpg';
 import jbBrand from '../assets/home/jb-brand.jpg';
 import { WORK, BOXES, HERO, PROCESS, SYSTEM, CHOICES, CONTACT } from '../data/site';
 import { PIECES, ICONS, BRANDS, scatter } from '../data/mess';
+import { SYSMAP } from '../data/sysmap';
 import '../styles/home.css';
 
 const W = WORK;
@@ -98,7 +99,7 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
           </span>
         ))}
       </div>
-      <h2 class="mess-h rv" id="mess-h">Marketing is complicated.</h2>
+      <h2 class="mess-h rv" id="mess-h">Marketing requires a system.</h2>
     </section>
 
     <section class="sec proc pad" id="process" aria-labelledby="process-h">
@@ -123,16 +124,18 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
     </section>
 
     <section class="sec sys pad" id="system" aria-labelledby="system-h">
+      <div class="sys-wrap">
+      <div class="sys-text">
       <div class="sys-head">
         <p class="eyebrow">What we build</p>
         <h2 class="rv" id="system-h">One system.<br />Every piece connected.</h2>
-        <p class="rv">Your brand, your website, how people find you and how you follow up, built to work together instead of bought one piece at a time.</p>
+        <p class="rv">Your brand, your website, how people find you and how you follow up, designed to work together and look consistent instead of built one piece at a time.</p>
       </div>
       <ol class="sys-list">
         {SYSTEM.map((s, i) => (
           <li class="sys-row rv">
             <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-            <h3>{s.title}</h3>
+            <h3><span class="t">{s.title}</span></h3>
             <div class="sys-body">
               <p>{s.blurb}</p>
               <ul class="tags" aria-label={`${s.title} includes`}>{s.tags.map((t) => <li>{t}</li>)}</ul>
@@ -140,6 +143,32 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
           </li>
         ))}
       </ol>
+      </div>
+      <aside class="sys-map" id="sysmap" aria-hidden="true">
+        <div class="sm-box">
+          <svg class="sm-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+            {SYSMAP.map((g, i) => {
+              const n = SYSMAP[(i + 1) % SYSMAP.length]!;
+              return <path class="ln ring" data-g={i} pathLength="1" d={`M${g.x} ${g.y}L${n.x} ${n.y}`} />;
+            })}
+            {SYSMAP.map((g, i) => <path class="ln hub" data-g={i} pathLength="1" d={`M50 50L${g.x} ${g.y}`} />)}
+            {SYSMAP.map((g, i) => g.items.map((it) => <path class="ln leaf" data-g={i} pathLength="1" d={`M${g.x} ${g.y}L${it.x} ${it.y}`} />))}
+          </svg>
+          <span class="sm-core" style="left:50%;top:50%" />
+          {SYSMAP.map((g, i) => (
+            <>
+              <span class="sm-anc" data-g={i} style={`left:${g.x}%;top:${g.y}%`} />
+              {g.items.map((it) => (
+                <span class="sm-n tk" data-g={i} style={`left:${it.x}%;top:${it.y}%`} title={it.label}>
+                  {it.brand ? <svg class="br" viewBox="0 0 24 24"><path d={BRANDS[it.brand]} /></svg> : <svg viewBox="0 0 24 24" set:html={ICONS[it.icon!]} />}
+                </span>
+              ))}
+            </>
+          ))}
+        </div>
+      </aside>
+      </div>
+      <svg class="sm-link" id="smlink" aria-hidden="true"><path /></svg>
     </section>
 
     <section class="sec pick pad" id="handoff" aria-labelledby="pick-h">

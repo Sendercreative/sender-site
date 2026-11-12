@@ -218,3 +218,37 @@
 
 /* Brand marks: filled, a touch smaller so they sit with the line icons */
 .tk svg.br{fill:currentColor;stroke:none;width:19px;height:19px}
+
+/* ── One system map (desktop): text left, sticky connected icons right ── */
+.sys-map,.sm-link{display:none}
+@media(min-width:1001px){
+  .sys{position:relative}
+  .sys-wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(40px,5vw,96px);align-items:start}
+  .sys-head{grid-template-columns:1fr;gap:20px}
+  .sys-row{grid-template-columns:clamp(44px,4vw,60px) minmax(0,1fr)}
+  .sys-row h3{align-self:center}
+  .sys-body{grid-column:2}
+  .sys-map{display:block;position:sticky;top:max(90px,calc(50vh - min(38vw,76vh)/2));height:min(38vw,76vh)}
+  .sm-box{position:relative;width:min(38vw,76vh);height:100%;margin-left:auto}
+  .sm-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  .ln{fill:none;stroke:#000;stroke-width:.2;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s var(--ease),opacity .6s}
+  .ln.leaf{opacity:.45}.ln.ring{stroke-dasharray:.02 .03;stroke-dashoffset:0;opacity:0}
+  .sm-core,.sm-anc{position:absolute;translate:-50% -50%;border-radius:50%;background:#000;transition:transform .6s var(--ease),opacity .6s}
+  .sm-core{width:14px;height:14px}
+  .sm-anc{width:8px;height:8px;opacity:.2;transform:scale(.6)}
+  .sm-n{position:absolute;translate:-50% -50%;width:30px;height:30px;background:#fff;border-radius:50%;opacity:.14;transform:scale(.85);transition:opacity .6s,transform .6s var(--ease)}
+  /* built so far */
+  .sm-n.on,.sm-anc.on{opacity:1;transform:none}
+  .ln.on{stroke-dashoffset:0}
+  /* the row you're reading */
+  .sm-n.cur{transform:scale(1.18)}
+  .sm-anc.cur{transform:scale(1.5)}
+  /* everything built: the ring closes */
+  .sys-map.done .ln.ring{opacity:.5}
+  .sm-link{display:block;position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:3;overflow:visible;opacity:0;transition:opacity .4s}
+  .sm-link.on{opacity:1}
+  .sm-link path{fill:none;stroke:#000;stroke-width:1}
+  .sys-row .t{position:relative}
+  .sys-row.cur .num{background:#000;color:#fff}
+}
+@media(min-width:1001px) and (prefers-reduced-motion:reduce){.ln,.sm-n,.sm-anc{transition:none}}

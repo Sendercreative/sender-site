@@ -251,3 +251,57 @@ document.fonts.ready.then(() => {
   addEventListener('resize', tick);
   frame();
 })();
+
+/* ── One system map: rows on the left light up their pieces on the right, linked by lines ── */
+(() => {
+  const map = document.getElementById('sysmap'), link = document.getElementById('smlink') as SVGSVGElement | null;
+  const sec = document.getElementById('system');
+  if (!map || !link || !sec) return;
+  const rows = [...sec.querySelectorAll<HTMLElement>('.sys-row')];
+  const anc = [...map.querySelectorAll<HTMLElement>('.sm-anc')];
+  const parts = [...map.querySelectorAll<Element>('[data-g]')];
+  const path = link.querySelector('path')!;
+  const txt = sec.querySelector<HTMLElement>('.sys-text')!;
+  document.body.appendChild(link); // fixed positioning must be relative to the viewport, not a transformed parent
+  const desk = matchMedia('(min-width:1001px)');
+  let q = false, last = -2;
+
+  function frame() {
+    if (!desk.matches) return;
+    const vh = innerHeight, sr = sec!.getBoundingClientRect();
+    if (sr.bottom < 0 || sr.top > vh) { link!.classList.remove('on'); return; }
+    // current row: the last one whose title has passed 55% of the screen
+    let cur = -1;
+    rows.forEach((r, i) => { if (r.querySelector('h3')!.getBoundingClientRect().top < vh * 0.55) cur = i; });
+    if (reduced && cur >= 0) cur = rows.length - 1;
+    if (cur !== last) {
+      last = cur;
+      parts.forEach((el) => {
+        const g = +(el as HTMLElement).dataset.g!;
+        el.classList.toggle('on', g <= cur);
+        el.classList.toggle('cur', g === cur);
+      });
+      rows.forEach((r, i) => r.classList.toggle('cur', i === cur));
+      map!.classList.toggle('done', cur === rows.length - 1);
+    }
+    // line from the current title to its hub on the map
+    const t = cur >= 0 ? rows[cur]!.querySelector('.t')!.getBoundingClientRect() : null;
+    const a = cur >= 0 ? anc[cur]!.getBoundingClientRect() : null;
+    if (!t || !a || t.bottom < 0 || t.top > vh) { link!.classList.remove('on'); return; }
+    // run straight along the title's line to the edge of the text column, then curve to the hub
+    const h = rows[cur]!.querySelector('h3')!.getBoundingClientRect();
+    const x1 = t.right + 14, y1 = h.top + h.height * 0.55, x2 = a.left + a.width / 2, y2 = a.top + a.height / 2;
+    const gx = Math.max(x1, txt.getBoundingClientRect().right + 16);
+    const k = Math.max(40, (x2 - gx) * 0.5);
+    path.setAttribute('d', `M${x1} ${y1}H${gx}C${gx + k} ${y1} ${x2 - k} ${y2} ${x2} ${y2}`);
+    link!.classList.add('on');
+  }
+  // keep following for a moment after scrolling stops: the rows' reveal animation is still moving them
+  let until = 0;
+  const loop = () => { frame(); if (performance.now() < until) requestAnimationFrame(loop); else q = false; };
+  const tick = () => { until = performance.now() + 1500; if (!q) { q = true; requestAnimationFrame(loop); } };
+  addEventListener('scroll', tick, { passive: true });
+  addEventListener('resize', tick);
+  desk.addEventListener('change', tick);
+  frame();
+})();

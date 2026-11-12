@@ -72,7 +72,7 @@ export const BOXES = [
 
 /** Hero headline: [word, line 1, line 2] for the intro, the docked state, then each panel. */
 export const HERO = [
-  { word: 'look', lines: ['as good as', 'your work.'] },
+  { word: 'look', lines: ['good, wherever', 'you show up.'] },
   { word: 'look', lines: ['at our', 'previous work.'] },
   { word: 'logos', lines: ['branding projects', 'that stand out.'] },
   { word: 'videos', lines: ['videos that', 'hold attention.'] },
