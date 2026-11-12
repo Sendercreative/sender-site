@@ -44,7 +44,7 @@ const panel = { ...W, logos: homeLogos, websites: homeSites };
       <div class="pin">
         <div class="bgfx" aria-hidden="true"><b></b><b></b><b></b></div>
         <div class="hvid" aria-hidden="true">
-          <video id="hvid" src={HERO_VIDEO.src} muted loop playsinline preload="metadata"></video>
+          <video id="hvid" src={HERO_VIDEO.src} poster={HERO_VIDEO.poster} muted loop playsinline preload="metadata"></video>
           {heroIcons.map((h) => (
             <span class="hi" style={`left:${h.x}%;top:${h.y}%;--r:${h.r}deg;--fd:${h.d}s`}>
               {h.brand ? <svg class="br" viewBox="0 0 24 24"><path d={BRANDS[h.brand]} /></svg> : <svg viewBox="0 0 24 24" set:html={ICONS[h.icon!]} />}

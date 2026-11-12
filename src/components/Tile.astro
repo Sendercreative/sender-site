@@ -25,7 +25,7 @@ const attrs = y || p.video || p.instagram ? {} : { href };
   ) : y ? (
     <YouTube url={p.youtube!} title={p.name} class="m wide" />
   ) : p.video ? (
-    <div class="m wide">
+    <div class:list={['m', p.video.portrait ? 'tall' : 'wide']}>
       <video class="lazyv" src={p.video.src} poster={p.video.poster} muted loop playsinline controls preload={p.video.poster ? 'none' : 'metadata'} aria-label={p.name}></video>
     </div>
   ) : p.photo ? (

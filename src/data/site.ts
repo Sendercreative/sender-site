@@ -22,7 +22,7 @@ export type WorkItem = {
   /** Inverse logo, used on dark tiles */
   inv?: ImageMetadata;
   /** Self-hosted video (path under /public) */
-  video?: { src: string; poster?: string };
+  video?: { src: string; poster?: string; portrait?: boolean };
   /** Instagram post/reel permalink — official embed, loaded when scrolled near */
   instagram?: string;
   /** YouTube URL — rendered as a muted autoplay loop */
@@ -43,7 +43,10 @@ export type WorkItem = {
 const GS_EXPLAINER: WorkItem = { name: 'Gutter Sleeve explainer', tag: 'Explainer video', year: '2025', youtube: 'https://www.youtube.com/watch?v=E5VHcj4wQM8' };
 
 /** Work page Video section (and the Photo & Video service page) */
+const HIGHLIGHTS: WorkItem = { name: 'Sender highlights', tag: 'Highlight reel', video: { src: '/media/highlights-vertical.mp4', poster: '/media/highlights-vertical.jpg', portrait: true } };
+
 export const VIDEO_LIBRARY: WorkItem[] = [
+  HIGHLIGHTS,
   { name: 'Dicam overview', tag: 'Overview video', video: { src: 'https://cdn.capturestudio.ca/Dicam/Dicam-overview.mp4' } },
   GS_EXPLAINER,
   { name: 'Round 2 Tires', tag: 'Social reel', instagram: 'https://www.instagram.com/reel/DdSMpJ7R2b5/' },
@@ -56,7 +59,7 @@ export const WORK: Record<'logos' | 'videos' | 'websites', WorkItem[]> = {
     img: p.images?.logoLight, inv: p.images?.logoDark, ph: 'Logo',
   })),
   /** Homepage Video panel */
-  videos: [GS_EXPLAINER],
+  videos: [HIGHLIGHTS],
   websites: PROJECTS.map((p) => ({
     name: p.name, tag: p.status === 'soon' ? 'Website · Soon' : 'Website', href: projectHref(p),
     shot: p.images?.desktop, mshot: p.images?.mobile, ph: 'Website screenshot', dark: true,
@@ -71,8 +74,8 @@ export const BOXES = [
 ] as const;
 
 /** Hero headline: [word, line 1, line 2] for the intro, the docked state, then each panel. */
-/** Hero background video (black & white, faded). Stand-in until the edited version is ready. */
-export const HERO_VIDEO = { src: 'https://cdn.capturestudio.ca/Dicam/Dicam-overview.mp4' };
+/** Hero background video (black & white, faded). Files live in public/media. */
+export const HERO_VIDEO = { src: '/media/hero-bg.mp4', poster: '/media/hero-bg.jpg' };
 
 export const HERO = [
   { word: 'look', lines: ['good, wherever', 'you show up.'] },
