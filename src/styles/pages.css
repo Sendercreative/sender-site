@@ -3,9 +3,6 @@
 .inner body{background:#000}
 .pg{background:#fff;color:#000}
 .pg-hero{position:relative;padding-top:clamp(150px,18vw,240px);padding-bottom:clamp(60px,8vw,120px);overflow:hidden}
-.crumbs{display:flex;flex-wrap:wrap;gap:10px;font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#6b6b6b}
-.crumbs a{color:inherit;border-bottom:1px solid transparent;transition:border-color .3s}.crumbs a:hover{border-color:currentColor}
-.crumbs span[aria-hidden]{opacity:.5}
 .pg-hero h1{margin-top:28px;font:700 clamp(38px,5.21vw,93px)/.9 var(--disp);letter-spacing:-.055em;max-width:14ch}
 .pg-hero .lead{margin-top:clamp(28px,3vw,44px);font-size:clamp(17px,1.45vw,22px);line-height:1.55;color:#222;max-width:52ch}
 .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
